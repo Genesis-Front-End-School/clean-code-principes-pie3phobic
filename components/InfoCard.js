@@ -1,25 +1,19 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Image from "next/image";
 import { HeartIcon } from "@heroicons/react/outline";
 import { StarIcon } from "@heroicons/react/solid";
 import { useRouter } from "next/router";
-import ReactPlayer from "react-player";
 function InfoCard({
-  containsLockedLessons,
   description,
-  duration,
   id,
-  launchDate,
   lessonsCount,
   meta,
   previewImageLink,
   rating,
-  status,
-  tags,
   title,
 }) {
   const router = useRouter();
-  const openItem = (e) => {
+  const openItem = () => {
     router.push({
       pathname: "/course",
       query: {
@@ -27,7 +21,6 @@ function InfoCard({
       },
     });
   };
-  const [playVideo, setPlayVideo] = useState(false);
   return (
     <div
       className="flex flex-col lg:flex-row py-4 lg:py-7 px-4 gap-10 border-b cursor-pointer hover:opacity-80 hover:shadow-lg transition duration-200 ease-out first:border-t last:border-t-0 "
@@ -35,7 +28,8 @@ function InfoCard({
     >
       <div className="relative w-[380px] h-[190px] lg:w-[380px] lg:h-[220px] md:w-full md:h-[300px] flex-shrink-0 self-center">
         <Image
-          src={previewImageLink + "/cover.webp"}
+          src={`${previewImageLink}/cover.webp`}
+          alt="Course preview image"
           layout="fill"
           objectFit="cover"
           className="rounded-2xl"
@@ -52,7 +46,7 @@ function InfoCard({
           Number of lessons: {lessonsCount}
         </p>
         <div className="flex-grow">
-          {[meta.skills]?.map((item, value) =>
+          {[meta.skills]?.map((item) =>
             item?.map((value, index) => (
               <p key={`skill-${index}`} className="text-black/70">
                 {value}

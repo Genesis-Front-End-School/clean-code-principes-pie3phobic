@@ -1,16 +1,11 @@
 import React, { useState, useEffect, useCallback, useRef } from "react";
-import { useRouter } from "next/router";
 import Header from "../components/Header";
 import ReactPlayer from "react-player";
-import Image from "next/image";
 import LessonCard from "../components/LessonCard";
 import { FireIcon } from "@heroicons/react/outline";
 import { StarIcon } from "@heroicons/react/solid";
-import { CheckIcon } from "@heroicons/react/outline";
-import Footer from "../components/Footer";
 
 function Course({ data }) {
-  const router = useRouter();
   const lessonData = data.lessons;
   const [videoUrl, setVideoUrl] = useState(data.meta.courseVideoPreview?.link);
   const [nowPlaying, setNowPlaying] = useState("Course Intro");
@@ -19,13 +14,13 @@ function Course({ data }) {
     if (data.meta.courseVideoPreview?.link === void 0) setLockedContent(true);
   }, []);
   const [played, setPlayed] = useState(0);
-  const [isPlaying, setIsPlaying] = React.useState(true);
-  const [isEnded, setIsEnded] = React.useState(false);
+  const [isPlaying, setIsPlaying] = useState(true);
+  const [isEnded, setIsEnded] = useState(false);
   const playerRef = useRef();
-  const [isReady, setIsReady] = React.useState(false);
+  const [isReady, setIsReady] = useState(false);
   const onEnded = useCallback(() => {
     if (!isEnded) {
-      playerRef.current.getDuration() == played;
+      playerRef.current.getDuration() === played;
       setIsEnded(true);
     }
   }, [isEnded]);
@@ -42,10 +37,10 @@ function Course({ data }) {
     setIsReady(true);
   }, [isReady]);
   return (
-    <div className="">
+    <div>
       <Header />
       <div className="ml-10">
-        <div className="">
+        <div>
           <div className="flex flex-col">
             <h1 className="text-3xl font-semibold pb-2">{data.title}</h1>
             <p className="pb-6 text-lg">{data.description}</p>
@@ -64,7 +59,7 @@ function Course({ data }) {
                 <a className="font-bold">{data.rating}</a>
               </div>
               <div className="flex-grow">
-                {[data.meta.skills]?.map((item, value) =>
+                {[data.meta.skills]?.map((item) =>
                   item?.map((value, index) => (
                     <p key={`skill-${index}`} className="text-black/70">
                       {value}
@@ -76,12 +71,12 @@ function Course({ data }) {
                 Now Playing: {nowPlaying}
               </p>
               <div className="pt-4">
-                {lockedContent == true && (
+                {lockedContent === true && (
                   <a className="bg-red-400/80 px-24 py-1 rounded-3xl text-white">
                     This content is locked
                   </a>
                 )}
-                {isEnded == true && (
+                {isEnded === true && (
                   <a className="bg-green-400/80 px-24 py-1 rounded-3xl text-white">
                     Lesson finished ✔
                   </a>
@@ -117,50 +112,25 @@ function Course({ data }) {
           </div>
           <div className="flex flex-col bg-gray-200 h-[560px] w-[310px] lg:w-[500px] overflow-scroll rounded-3xl lg:absolute pb-8 scrollbar-hide md:w-[686px] lg:top-80 lg:right-0">
             <p className="pl-10 pt-6 pb-4 text-xl font-semibold">Lessons:</p>
-            {lessonData.map(
-              ({
-                duration,
-                id,
-                link,
-                meta,
-                order,
-                previewImageLink,
-                status,
-                title,
-                type,
-              }) => (
-                <div
-                  key={id}
-                  onClick={() => {
-                    setNowPlaying(
-                      "Lesson " + { order }.order + " '" + { title }.title + "'"
-                    );
-                    if ({ status }.status == "unlocked") {
-                      setVideoUrl({ link }.link);
-                      setIsEnded(false);
-                      setLockedContent(false);
-                    } else {
-                      setLockedContent(true);
-                      setIsEnded(false);
-                      setVideoUrl("");
-                    }
-                  }}
-                >
-                  <LessonCard
-                    key={id}
-                    duration={duration}
-                    id={id}
-                    link={link}
-                    meta={meta}
-                    order={order}
-                    previewImageLink={previewImageLink}
-                    status={status}
-                    title={title}
-                    type={type}
-                  />
-                </div>
-              )
-            )}
+            {lessonData.map((lesson) => (
+              <div
+                key={lesson.id}
+                onClick={() => {
+                  setNowPlaying(`Lesson ${lesson.order} '${lesson.title}'`);
+                  if (lesson.status === "unlocked") {
+                    setVideoUrl(lesson.link);
+                    setIsEnded(false);
+                    setLockedContent(false);
+                  } else {
+                    setLockedContent(true);
+                    setIsEnded(false);
+                    setVideoUrl("");
+                  }
+                }}
+              >
+                <LessonCard key={lesson.id} {...lesson} />
+              </div>
+            ))}
           </div>
         </div>
       </div>
@@ -171,7 +141,6 @@ function Course({ data }) {
 export default Course;
 export async function getServerSideProps(context) {
   const id = context.query.id;
-  // Fetch data from external API
   const host = "http://api.wisey.app";
   const version = "api/v1";
   const accessToken = await fetch(
@@ -186,6 +155,5 @@ export async function getServerSideProps(context) {
   });
   const data = await res.json();
 
-  // Pass data to the page via props
   return { props: { data, accesData } };
 }

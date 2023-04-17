@@ -129,7 +129,6 @@
   cursor: pointer;
 }
 
-/* pagination pageItem */
 .pageItem {
   display: flex;
   justify-content: center;
@@ -141,7 +140,6 @@
   cursor: pointer;
 }
 
-/* pagination page item when active */
 .pageItemActive {
   display: flex;
   justify-content: center;

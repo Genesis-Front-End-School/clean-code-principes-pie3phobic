@@ -1,28 +1,19 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { LockClosedIcon } from "@heroicons/react/solid";
 
-function LessonCard({
-  duration,
-  id,
-  link,
-  meta,
-  order,
-  previewImageLink,
-  status,
-  title,
-  type,
-}) {
+function LessonCard({ order, previewImageLink, status, title }) {
   return (
-    <div className="">
+    <div>
       <div className="flex rounded-2xl bg-white h-20 md:h-28 w-[250px] md:w-[400px] my-2 mx-auto cursor-pointer items-center active:bg-red-400">
         <img
-          src={previewImageLink + "/lesson-" + order + ".webp"}
+          src={`${previewImageLink}/lesson-${order}.webp`}
+          alt="Lesson preview image"
           className="hidden md:block rounded-2xl w-32 h-[75px] mx-4"
-        ></img>
+        />
         <p className="flex-grow ">
           {order}. {title}
         </p>
-        {status == "locked" && (
+        {status === "locked" && (
           <LockClosedIcon className="h-6 pr-10 text-red-400" />
         )}
       </div>
