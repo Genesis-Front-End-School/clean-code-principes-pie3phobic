@@ -3,6 +3,7 @@ import InfoCard from "../components/InfoCard";
 import Header from "../components/Header";
 import Pagination from "../components/Pagination";
 import { paginate } from "../helpers/paginate";
+import fetchData from "./api/fetchData";
 
 function Courses({ data }) {
   const coursesData = data.courses;
@@ -35,19 +36,6 @@ function Courses({ data }) {
 
 export default Courses;
 export async function getServerSideProps() {
-  const host = "http://api.wisey.app";
-  const version = "api/v1";
-  const accessToken = await fetch(
-    `${host}/${version}/auth/anonymous?platform=subscriptions`
-  );
-  const accesData = await accessToken.json();
-  const token = accesData.token;
-  const res = await fetch(`${host}/${version}/core/preview-courses`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-  const data = await res.json();
-
+  const { data, accesData } = await fetchData();
   return { props: { data, accesData } };
 }
