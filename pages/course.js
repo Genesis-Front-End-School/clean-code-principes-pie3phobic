@@ -1,10 +1,17 @@
-import React, { useState, useEffect, useCallback, useRef } from "react";
+import React, {
+  useState,
+  useEffect,
+  useCallback,
+  useRef,
+  useReducer,
+} from "react";
 import Header from "../components/Header";
 import ReactPlayer from "react-player";
 import LessonCard from "../components/LessonCard";
 import { FireIcon } from "@heroicons/react/outline";
 import { StarIcon } from "@heroicons/react/solid";
 import getCourseData from "./api/getCourseData";
+import Link from "next/link";
 
 function Course({ data }) {
   const lessonData = data.lessons;
