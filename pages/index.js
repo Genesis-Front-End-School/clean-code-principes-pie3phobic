@@ -3,16 +3,10 @@ import Banner from "../components/Banner";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import Sidebar from "../components/Sidebar";
-import { useRouter } from "next/router";
 import MediumCard from "../components/MediumCard";
+import Link from "next/link";
 
 export default function Home() {
-  const router = useRouter();
-  const openCourses = () => {
-    router.push({
-      pathname: "/courses",
-    });
-  };
   return (
     <div>
       <Head>
@@ -50,12 +44,11 @@ export default function Home() {
           />
         </div>
         <div className="flex justify-center pt-10">
-          <button
-            className="bg-red-400 rounded-full text-white font-semibold px-6 py-2  text-2xl md:text-4xl shadow-md hover:shadow-lg active:scale-105 transform transition duration-200 ease-out"
-            onClick={openCourses}
-          >
-            Go To Courses
-          </button>
+          <Link href={{ pathname: "/courses" }}>
+            <button className="bg-red-400 rounded-full text-white font-semibold px-6 py-2  text-2xl md:text-4xl shadow-md hover:shadow-lg active:scale-105 transform transition duration-200 ease-out">
+              Go To Courses
+            </button>
+          </Link>
         </div>
         <div className="w-[300px] mx-auto lg:w-full">
           <MediumCard />

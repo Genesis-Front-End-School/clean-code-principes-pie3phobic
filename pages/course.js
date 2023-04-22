@@ -5,33 +5,74 @@ import React, {
   useRef,
   useReducer,
 } from "react";
-import Header from "../components/Header";
+import { FireIcon, StarIcon } from "@heroicons/react/solid";
 import ReactPlayer from "react-player";
+import Header from "../components/Header";
 import LessonCard from "../components/LessonCard";
-import { FireIcon } from "@heroicons/react/outline";
-import { StarIcon } from "@heroicons/react/solid";
 import getCourseData from "./api/getCourseData";
-import Link from "next/link";
 
 function Course({ data }) {
   const lessonData = data.lessons;
-  const [videoUrl, setVideoUrl] = useState(data.meta.courseVideoPreview?.link);
-  const [nowPlaying, setNowPlaying] = useState("Course Intro");
-  const [lockedContent, setLockedContent] = useState(false);
-  useEffect(() => {
-    if (data.meta.courseVideoPreview?.link === void 0) setLockedContent(true);
-  }, []);
   const [played, setPlayed] = useState(0);
-  const [isPlaying, setIsPlaying] = useState(true);
-  const [isEnded, setIsEnded] = useState(false);
-  const playerRef = useRef();
-  const [isReady, setIsReady] = useState(false);
-  const onEnded = useCallback(() => {
-    if (!isEnded) {
-      playerRef.current.getDuration() === played;
-      setIsEnded(true);
+  const initialState = {
+    videoUrl: data.meta.courseVideoPreview?.link,
+    nowPlaying: "Course Intro",
+    lockedContent: false,
+    isPlaying: true,
+    isEnded: false,
+    isReady: false,
+  };
+
+  function reducer(state, action) {
+    switch (action.type) {
+      case "setVideoUrl":
+        return { ...state, videoUrl: action.payload };
+      case "setNowPlaying":
+        return { ...state, nowPlaying: action.payload };
+      case "setLockedContent":
+        return { ...state, lockedContent: action.payload };
+      case "setIsPlaying":
+        return { ...state, isPlaying: action.payload };
+      case "setIsEnded":
+        if (lessonRef?.current) {
+          lessonRef.current.style.backgroundColor = "red";
+        }
+        return { ...state, isEnded: action.payload };
+      case "setIsReady":
+        return { ...state, isReady: action.payload };
+      default:
+        throw new Error();
     }
-  }, [isEnded]);
+  }
+
+  const handleUnlockedVideo = () => {
+    dispatch({ type: "setVideoUrl", payload: lessonRef.current.link });
+    dispatch({ type: "setIsEnded", payload: false });
+    dispatch({ type: "setLockedContent", payload: false });
+  };
+
+  const handleLockedVideo = () => {
+    dispatch({ type: "setIsLocked", payload: true });
+    dispatch({ type: "setIsEnded", payload: false });
+    dispatch({ type: "setVideoUrl", payload: "" });
+  };
+
+  const [state, dispatch] = useReducer(reducer, initialState);
+  const playerRef = useRef();
+  const lessonRef = useRef();
+
+  useEffect(() => {
+    if (data.meta.courseVideoPreview?.link === void 0)
+      dispatch({ type: "setLockedContent", payload: true });
+  }, []);
+
+  const onEnded = useCallback(() => {
+    if (!state.isEnded) {
+      playerRef.current.getDuration() === played;
+      dispatch({ type: "setIsEnded", payload: true });
+    }
+  }, [state.isEnded, state.played]);
+
   const onReady = useCallback(() => {
     const videoDurations =
       JSON.parse(window.localStorage.getItem("videoDurations")) || {};
@@ -42,8 +83,9 @@ function Course({ data }) {
         playerRef.current.play();
       }
     }
-    setIsReady(true);
-  }, [isReady]);
+    dispatch({ type: "setIsReady", payload: true });
+  }, []);
+
   return (
     <div>
       <Header />
@@ -76,15 +118,15 @@ function Course({ data }) {
                 )}
               </div>
               <p className="font-semibold pt-4 text-lg">
-                Now Playing: {nowPlaying}
+                Now Playing: {state.nowPlaying}
               </p>
               <div className="pt-4">
-                {lockedContent === true && (
+                {state.lockedContent === true && (
                   <a className="bg-red-400/80 px-24 py-1 rounded-3xl text-white">
                     This content is locked
                   </a>
                 )}
-                {isEnded === true && (
+                {state.isEnded === true && (
                   <a className="bg-green-400/80 px-24 py-1 rounded-3xl text-white">
                     Lesson finished ✔
                   </a>
@@ -96,10 +138,10 @@ function Course({ data }) {
             <div className="pr-10 lg:pr-0">
               <ReactPlayer
                 ref={playerRef}
-                url={videoUrl}
+                url={state.videoUrl}
                 width="100%"
                 onEnded={onEnded}
-                playing={isPlaying}
+                playing={state.isPlaying}
                 onReady={onReady}
                 muted={false}
                 controls={true}
@@ -123,16 +165,17 @@ function Course({ data }) {
             {lessonData.map((lesson) => (
               <div
                 key={lesson.id}
+                ref={lessonRef}
                 onClick={() => {
-                  setNowPlaying(`Lesson ${lesson.order} '${lesson.title}'`);
+                  lessonRef.current = lesson;
+                  dispatch({
+                    type: "setNowPlaying",
+                    payload: `Lesson ${lesson.order} '${lesson.title}'`,
+                  });
                   if (lesson.status === "unlocked") {
-                    setVideoUrl(lesson.link);
-                    setIsEnded(false);
-                    setLockedContent(false);
+                    handleUnlockedVideo();
                   } else {
-                    setLockedContent(true);
-                    setIsEnded(false);
-                    setVideoUrl("");
+                    handleLockedVideo();
                   }
                 }}
               >

@@ -1,12 +1,6 @@
-import { useRouter } from "next/router";
+import Link from "next/link";
 
 function Sidebar() {
-  const router = useRouter();
-  const openCourses = () => {
-    router.push({
-      pathname: "/courses",
-    });
-  };
   return (
     <div className="hidden lg:block p-2 md:p-10 py-6 overflow-y-auto">
       <div className="flex flex-col items-center justify-center mb-10">
@@ -34,9 +28,9 @@ function Sidebar() {
           <p className="text-gray-700">Health</p>
         </div>
         <div className="bg-gray-300/60 py-2 px-2 rounded-xl  hover:bg-red-400/50 transition duration-150 cursor-pointer">
-          <p className="text-red-400" onClick={openCourses}>
-            Explore All
-          </p>
+          <Link href={{ pathname: "/courses" }}>
+            <p className="text-red-400">Explore All</p>
+          </Link>
         </div>
       </div>
     </div>
