@@ -191,6 +191,9 @@ _Additional changes:_
 
 This will allow us to create a reusable and maintainable API client, making the code easy to use and test. By maintaining a single token instance, we avoid having to re-fetch and re-validate the token for each request, which can save time and reduce the load on the authentication server.
 
+
+-----
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
