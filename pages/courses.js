@@ -3,7 +3,7 @@ import InfoCard from "../components/InfoCard";
 import Header from "../components/Header";
 import Pagination from "../components/Pagination";
 import { paginate } from "../helpers/paginate";
-import fetchData from "./api/fetchData";
+import ApiClient from "./api/fetchData";
 
 function Courses({ data }) {
   const coursesData = data.courses;
@@ -36,6 +36,7 @@ function Courses({ data }) {
 
 export default Courses;
 export async function getServerSideProps() {
-  const { data, accesData } = await fetchData();
-  return { props: { data, accesData } };
+  const apiClient = await ApiClient.getInstance();
+  const { data } = await apiClient.fetchData();
+  return { props: { data } };
 }

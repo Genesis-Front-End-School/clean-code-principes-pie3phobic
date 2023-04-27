@@ -1,19 +1,14 @@
-import React, {
-  useState,
-  useEffect,
-  useCallback,
-  useRef,
-  useReducer,
-} from "react";
+import React, { useEffect, useRef, useReducer } from "react";
 import { FireIcon, StarIcon } from "@heroicons/react/solid";
-import ReactPlayer from "react-player";
 import Header from "../components/Header";
 import LessonCard from "../components/LessonCard";
-import getCourseData from "./api/getCourseData";
+import ApiClient from "./api/getCourseData";
+import { reducer } from "../helpers/courseReducer";
+import VideoPlayer from "../components/VideoPlayer";
+import { handleUnlockedVideo, handleLockedVideo } from "../helpers/videoUtils";
 
 function Course({ data }) {
   const lessonData = data.lessons;
-  const [played, setPlayed] = useState(0);
   const initialState = {
     videoUrl: data.meta.courseVideoPreview?.link,
     nowPlaying: "Course Intro",
@@ -22,68 +17,12 @@ function Course({ data }) {
     isEnded: false,
     isReady: false,
   };
-
-  function reducer(state, action) {
-    switch (action.type) {
-      case "setVideoUrl":
-        return { ...state, videoUrl: action.payload };
-      case "setNowPlaying":
-        return { ...state, nowPlaying: action.payload };
-      case "setLockedContent":
-        return { ...state, lockedContent: action.payload };
-      case "setIsPlaying":
-        return { ...state, isPlaying: action.payload };
-      case "setIsEnded":
-        if (lessonRef?.current) {
-          lessonRef.current.style.backgroundColor = "red";
-        }
-        return { ...state, isEnded: action.payload };
-      case "setIsReady":
-        return { ...state, isReady: action.payload };
-      default:
-        throw new Error();
-    }
-  }
-
-  const handleUnlockedVideo = () => {
-    dispatch({ type: "setVideoUrl", payload: lessonRef.current.link });
-    dispatch({ type: "setIsEnded", payload: false });
-    dispatch({ type: "setLockedContent", payload: false });
-  };
-
-  const handleLockedVideo = () => {
-    dispatch({ type: "setIsLocked", payload: true });
-    dispatch({ type: "setIsEnded", payload: false });
-    dispatch({ type: "setVideoUrl", payload: "" });
-  };
-
   const [state, dispatch] = useReducer(reducer, initialState);
-  const playerRef = useRef();
   const lessonRef = useRef();
 
   useEffect(() => {
     if (data.meta.courseVideoPreview?.link === void 0)
       dispatch({ type: "setLockedContent", payload: true });
-  }, []);
-
-  const onEnded = useCallback(() => {
-    if (!state.isEnded) {
-      playerRef.current.getDuration() === played;
-      dispatch({ type: "setIsEnded", payload: true });
-    }
-  }, [state.isEnded, state.played]);
-
-  const onReady = useCallback(() => {
-    const videoDurations =
-      JSON.parse(window.localStorage.getItem("videoDurations")) || {};
-    if (JSON.stringify(videoDurations) !== "{}") {
-      let timestamp = videoDurations[playerRef.current.props.url];
-      if (timestamp > 0) {
-        playerRef.current.seekTo(timestamp, "seconds");
-        playerRef.current.play();
-      }
-    }
-    dispatch({ type: "setIsReady", payload: true });
   }, []);
 
   return (
@@ -136,27 +75,12 @@ function Course({ data }) {
           </div>
           <div className="flex flex-col  lg:flex-row lg:justify-between">
             <div className="pr-10 lg:pr-0">
-              <ReactPlayer
-                ref={playerRef}
+              <VideoPlayer
                 url={state.videoUrl}
+                initialState={dispatch}
                 width="100%"
-                onEnded={onEnded}
-                playing={state.isPlaying}
-                onReady={onReady}
                 muted={false}
                 controls={true}
-                onProgress={(progress) => {
-                  setPlayed(progress.playedSeconds);
-                  const video_url = playerRef.current.props.url;
-                  const videoDurations =
-                    JSON.parse(window.localStorage.getItem("videoDurations")) ||
-                    {};
-                  videoDurations[video_url] = played;
-                  window.localStorage.setItem(
-                    "videoDurations",
-                    JSON.stringify(videoDurations)
-                  );
-                }}
               />
             </div>
           </div>
@@ -173,9 +97,9 @@ function Course({ data }) {
                     payload: `Lesson ${lesson.order} '${lesson.title}'`,
                   });
                   if (lesson.status === "unlocked") {
-                    handleUnlockedVideo();
+                    handleUnlockedVideo(dispatch, lessonRef);
                   } else {
-                    handleLockedVideo();
+                    handleLockedVideo(dispatch);
                   }
                 }}
               >
@@ -188,11 +112,11 @@ function Course({ data }) {
     </div>
   );
 }
-
 export default Course;
+
 export async function getServerSideProps(context) {
   const { id } = context.query;
-  const { data, accesData } = await getCourseData(id);
-
-  return { props: { data, accesData } };
+  const apiClient = await ApiClient.getInstance();
+  const { data } = await apiClient.getCourseData(id);
+  return { props: { data } };
 }
