@@ -1,3 +1,4 @@
+import React from "react";
 import styles from "../styles/Home.module.css";
 const Pagination = ({ items, pageSize, currentPage, onPageChange }) => {
   const pagesCount = Math.ceil(items / pageSize);

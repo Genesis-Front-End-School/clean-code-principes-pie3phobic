@@ -1,8 +1,8 @@
 import { MenuIcon, UserCircleIcon, SearchIcon } from "@heroicons/react/solid";
-import { useState } from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 function Header({ placeholder }) {
-  const [searchInput, setSearchInput] = useState("");
+  const [searchInput, setSearchInput] = useState<string>("");
   return (
     <header className="sticky top-0 z-50 grid grid-cols-3 bg-white py-5 px-5 md:px-10">
       <Link href={{ pathname: "/" }}>

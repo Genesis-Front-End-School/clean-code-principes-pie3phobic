@@ -7,7 +7,7 @@ import ApiClient from "./api/fetchData";
 
 function Courses({ data }) {
   const coursesData = data.courses;
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState<number>(1);
   const pageSize = 10;
 
   const onPageChange = (page) => {
