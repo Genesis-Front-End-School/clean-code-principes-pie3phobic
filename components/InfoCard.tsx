@@ -3,26 +3,7 @@ import Image from "next/image";
 import { HeartIcon } from "@heroicons/react/outline";
 import { StarIcon } from "@heroicons/react/solid";
 import Link from "next/link";
-
-type CourseProps = {
-  description: string;
-  id: string;
-  lessonsCount: number;
-  meta: CourseMeta;
-  previewImageLink: string;
-  rating: number;
-  title: string;
-};
-
-type CourseMeta = {
-  slug: string;
-  skills: string[];
-  courseVideoPreview: {
-    link: string;
-    duration: number;
-    previewImageLink: string;
-  };
-};
+import { CourseProps } from "../helpers/types";
 
 const InfoCard: React.FC<CourseProps> = (props) => {
   return (

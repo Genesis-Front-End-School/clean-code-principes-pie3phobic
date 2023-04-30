@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useReducer } from "react";
+import React, { useEffect, useRef, useReducer, RefObject } from "react";
 import { FireIcon, StarIcon } from "@heroicons/react/solid";
 import Header from "../components/Header";
 import LessonCard from "../components/LessonCard";
@@ -6,8 +6,15 @@ import ApiClient from "./api/getCourseData";
 import { reducer } from "../helpers/courseReducer";
 import VideoPlayer from "../components/VideoPlayer";
 import { handleUnlockedVideo, handleLockedVideo } from "../helpers/videoUtils";
-
-function Course({ data }) {
+import { GetServerSideProps } from "next";
+import { ParsedUrlQuery } from "querystring";
+import {
+  CourseDataProps,
+  LessonProps,
+  PropsDataCourse,
+} from "../helpers/types";
+import { GetServerSidePropsContext } from "next";
+const Course: React.FC<PropsDataCourse> = ({ data }) => {
   const lessonData = data.lessons;
   const initialState = {
     videoUrl: data.meta.courseVideoPreview?.link,
@@ -19,6 +26,7 @@ function Course({ data }) {
   };
   const [state, dispatch] = useReducer(reducer, initialState);
   const lessonRef = useRef();
+  //const lessonRef: RefObject<LessonProps> = useRef();
 
   useEffect(() => {
     if (data.meta.courseVideoPreview?.link === void 0)
@@ -111,12 +119,15 @@ function Course({ data }) {
       </div>
     </div>
   );
-}
+};
 export default Course;
-
-export async function getServerSideProps(context) {
+export const getServerSideProps = async (
+  context: GetServerSidePropsContext
+) => {
   const { id } = context.query;
   const apiClient = await ApiClient.getInstance();
-  const { data } = await apiClient.getCourseData(id);
+  const { data }: { data: CourseDataProps } = await apiClient.getCourseData(
+    id as string
+  );
   return { props: { data } };
-}
+};

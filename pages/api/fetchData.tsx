@@ -1,7 +1,9 @@
 import fetchAccessToken from "./accessToken";
+import { DataProps } from "../../helpers/types";
+
 class ApiClient {
-  static instance;
-  accessToken;
+  static instance: ApiClient;
+  accessToken: string;
 
   static async getInstance() {
     if (!ApiClient.instance) {
@@ -11,25 +13,24 @@ class ApiClient {
     return ApiClient.instance;
   }
 
-  async refreshToken() {
+  async refreshToken(): Promise<void> {
     this.accessToken = await fetchAccessToken();
-    // Schedule the next token refresh in 1 hour
     setTimeout(() => {
       this.refreshToken();
     }, 3600 * 1000);
   }
 
-  async fetchData() {
+  async fetchData(): Promise<{ data: DataProps }> {
     try {
-      const host = "http://api.wisey.app";
-      const version = "api/v1";
+      const host: string = "http://api.wisey.app";
+      const version: string = "api/v1";
       const res = await fetch(`${host}/${version}/core/preview-courses`, {
         headers: {
           Authorization: `Bearer ${this.accessToken}`,
         },
       });
-      const data = await res.json();
-      return { data: data || null, accessToken: this.accessToken || null };
+      const data: DataProps = (await res.json()) as DataProps;
+      return { data };
     } catch (error) {
       console.error("Error fetching data:", error);
       throw error;
