@@ -1,13 +1,18 @@
-import React, { useEffect, useRef, useReducer, RefObject } from "react";
+import React, {
+  useEffect,
+  useRef,
+  useReducer,
+  RefObject,
+  MutableRefObject,
+  LegacyRef,
+} from "react";
 import { FireIcon, StarIcon } from "@heroicons/react/solid";
 import Header from "../components/Header";
 import LessonCard from "../components/LessonCard";
 import ApiClient from "./api/getCourseData";
-import { reducer } from "../helpers/courseReducer";
+import { Action, State, reducer } from "../helpers/courseReducer";
 import VideoPlayer from "../components/VideoPlayer";
 import { handleUnlockedVideo, handleLockedVideo } from "../helpers/videoUtils";
-import { GetServerSideProps } from "next";
-import { ParsedUrlQuery } from "querystring";
 import {
   CourseDataProps,
   LessonProps,
@@ -24,9 +29,12 @@ const Course: React.FC<PropsDataCourse> = ({ data }) => {
     isEnded: false,
     isReady: false,
   };
-  const [state, dispatch] = useReducer(reducer, initialState);
-  const lessonRef = useRef();
-  //const lessonRef: RefObject<LessonProps> = useRef();
+  const [state, dispatch] = useReducer<React.Reducer<State, Action>>(
+    reducer,
+    initialState
+  );
+  //const lessonRef: LegacyRef<HTMLDivElement> = useRef(null);
+  const lessonRef: MutableRefObject<LessonProps> = useRef(null);
 
   useEffect(() => {
     if (data.meta.courseVideoPreview?.link === void 0)
@@ -83,13 +91,7 @@ const Course: React.FC<PropsDataCourse> = ({ data }) => {
           </div>
           <div className="flex flex-col  lg:flex-row lg:justify-between">
             <div className="pr-10 lg:pr-0">
-              <VideoPlayer
-                url={state.videoUrl}
-                initialState={dispatch}
-                width="100%"
-                muted={false}
-                controls={true}
-              />
+              <VideoPlayer url={state.videoUrl} initialState={initialState} />
             </div>
           </div>
           <div className="flex flex-col bg-gray-200 h-[560px] w-[310px] lg:w-[500px] overflow-scroll rounded-3xl lg:absolute pb-8 scrollbar-hide md:w-[686px] lg:top-80 lg:right-0">

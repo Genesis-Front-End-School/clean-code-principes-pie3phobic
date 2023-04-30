@@ -1,3 +1,4 @@
+import { RefObject, LegacyRef } from "react";
 export type CourseProps = {
   description: string;
   id: string;
@@ -23,9 +24,6 @@ export type PaginationProps = {
   currentPage: number;
   onPageChange: (page: number) => void;
 };
-// export type TokenProps = {
-//   token: string;
-// };
 export type TokenProps = string;
 export type DataProps = {
   data: {
