@@ -1,4 +1,3 @@
-import { RefObject, LegacyRef } from "react";
 export type CourseProps = {
   description: string;
   id: string;

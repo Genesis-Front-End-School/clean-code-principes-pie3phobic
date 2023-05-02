@@ -2,9 +2,7 @@ import React, {
   useEffect,
   useRef,
   useReducer,
-  RefObject,
   MutableRefObject,
-  LegacyRef,
 } from "react";
 import { FireIcon, StarIcon } from "@heroicons/react/solid";
 import Header from "../components/Header";
@@ -33,7 +31,6 @@ const Course: React.FC<PropsDataCourse> = ({ data }) => {
     reducer,
     initialState
   );
-  //const lessonRef: LegacyRef<HTMLDivElement> = useRef(null);
   const lessonRef: MutableRefObject<LessonProps> = useRef(null);
 
   useEffect(() => {

@@ -16,7 +16,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Header placeholder={"Start your search"} />
+      <Header/>
       <div className="flex">
         <Sidebar />
         <div className="max-w-7xl mx-auto overflow-y-auto">
