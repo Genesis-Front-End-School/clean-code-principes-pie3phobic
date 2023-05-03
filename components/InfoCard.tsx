@@ -21,7 +21,10 @@ const InfoCard: React.FC<CourseProps> = (props) => {
         <div className="flex flex-col flex-grow pl-5">
           <div className="flex justify-between">
             <p className="text-xl font-semibold">{props.title}</p>
-            <HeartIcon className="h-7 cursor-pointer" />
+            <HeartIcon
+              data-testid="heart-icon"
+              className="h-7 cursor-pointer"
+            />
           </div>
           <h4 className="text-black/60 font-semibold">{props.description}</h4>
           <div className="border-b w-10 pt-2" />
@@ -31,7 +34,7 @@ const InfoCard: React.FC<CourseProps> = (props) => {
           <div className="flex-grow">
             {[props.meta.skills]?.map((item) =>
               item?.map((value, index) => (
-                <p key={`skill-${index}`} className="text-black/70">
+                <p key={`skill-${index}`} className="text-black/70" data-testid="skill" >
                   {value}
                 </p>
               ))
@@ -39,7 +42,7 @@ const InfoCard: React.FC<CourseProps> = (props) => {
           </div>
           <div className="flex items-end pt-5">
             <p className="flex items-center">
-              <StarIcon className="h-5 text-red-400" />
+              <StarIcon data-testid="star-icon" className="h-5 text-red-400" />
               {props.rating}
             </p>
           </div>

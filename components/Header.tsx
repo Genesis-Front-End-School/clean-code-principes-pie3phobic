@@ -5,7 +5,7 @@ function Header() {
   const [searchInput, setSearchInput] = useState<string>("");
   return (
     <header className="sticky top-0 z-50 grid grid-cols-3 bg-white py-5 px-5 md:px-10">
-      <Link href={{ pathname: "/" }}>
+      <Link data-trstid="logo-link" href={{ pathname: "/" }}>
         <div className="relative flex items-center h-10 cursor-pointer my-auto">
           <img src="logo-study.png" width="100px" alt="StudyLab logo" />
         </div>
@@ -21,12 +21,13 @@ function Header() {
         <SearchIcon className="hidden md:inline-flex h-8 bg-red-400 text-white rounded-full p-2 cursor-pointer md:mx-2" />
       </div>
       <div className="flex items-center space-x-4 justify-end text-gray-600">
-        <Link href={{ pathname: "/courses" }}>
+        <Link data-testid="courses-link" href={{ pathname: "/courses" }}>
+          {/* <Link data-testid="courses-link" href="/courses"> */}
           <p className="hidden md:inline cursor-pointer text-lg">Courses</p>
         </Link>
         <div className=" flex items-center space-x-2 border-2 p-2 rounded-full">
-          <MenuIcon className="h-6" />
-          <UserCircleIcon className="h-6" />
+          <MenuIcon data-testid="menu-icon" className="h-6" />
+          <UserCircleIcon data-testid="user-icon" className="h-6" />
         </div>
       </div>
     </header>
