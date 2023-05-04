@@ -9,12 +9,11 @@ const Pagination: React.FC<PaginationProps> = ({
   onPageChange,
 }) => {
   const pagesCount: number = Math.ceil(items / pageSize);
-
   if (pagesCount === 1) return null;
   const pages: number[] = Array.from({ length: pagesCount }, (_, i) => i + 1);
 
   return (
-    <div>
+    <div data-testid="pagination">
       <ul className={styles.pagination}>
         {pages.map((page) => (
           <li

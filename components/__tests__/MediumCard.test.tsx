@@ -10,20 +10,20 @@ describe("MediumCard", () => {
     text: "Example text",
   };
 
-  it("renders the image with the correct src and alt attributes", () => {
+  test("renders the image with the correct src and alt attributes", () => {
     render(<MediumCard {...props} />);
     const image = screen.getByAltText(props.alt);
     expect(image).toHaveAttribute("src", props.src);
     expect(image).toHaveAttribute("alt", props.alt);
   });
 
-  it("renders the text with the correct content", () => {
+  test("renders the text with the correct content", () => {
     render(<MediumCard {...props} />);
     const text = screen.getByText(props.text);
     expect(text).toBeInTheDocument();
   });
 
-  it("applies the correct CSS classes", () => {
+  test("applies the correct CSS classes", () => {
     render(<MediumCard {...props} />);
     const card = screen.getByRole("img").parentElement;
     expect(card).toHaveClass("bg-gray-200/80");

@@ -22,11 +22,14 @@ const LessonCard: React.FC<LessonProps> = ({
           alt="Lesson preview image"
           className="hidden md:block rounded-2xl w-32 h-[75px] mx-4"
         />
-        <p className="flex-grow ">
+        <p data-testid="lesson-order-title" className="flex-grow ">
           {order}. {title}
         </p>
         {status === "locked" && (
-          <LockClosedIcon className="h-6 pr-10 text-red-400" />
+          <LockClosedIcon
+            data-testid="lock-closed-icon"
+            className="h-6 pr-10 text-red-400"
+          />
         )}
       </div>
     </div>
