@@ -51,7 +51,23 @@ export default function Home() {
           </Link>
         </div>
         <div className="w-[300px] mx-auto lg:w-full">
-          <MediumCard />
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 pt-20 pb-14">
+            <MediumCard
+              src="pic-11.png"
+              alt="Qualified lecturer image"
+              text="Qualified lecturers"
+            />
+            <MediumCard
+              src="pic-12.png"
+              alt="Technical support image"
+              text="Technical support 24/7"
+            />
+            <MediumCard
+              src="pic-13.png"
+              alt="Challenges image"
+              text="Challenges"
+            />
+          </div>
         </div>
       </main>
       <Footer />

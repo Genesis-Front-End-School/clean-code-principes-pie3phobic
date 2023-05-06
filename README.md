@@ -1,54 +1,198 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-24ddc0f5d75046c5622901739e7c5dd533143b0c8e959d652212380cedb1ea36.svg)](https://classroom.github.com/a/_2xjYeZK)
+[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-24ddc0f5d75046c5622901739e7c5dd533143b0c8e959d652212380cedb1ea36.svg)](https://classroom.github.com/a/SJ5YWrI-)
 
-# This is my case project created for Front-end school 2.0
+# SOLID
 
-# Demo:
+1. Refactored `MiddleCard` component so it`s not static and can be dinamically changed by passing different props.
+2. Refactored `Course.j`s page component, because it`s previous realisation was violating the SRP (single responcibility principle) as the page was responcible for managing the state of the video player as well as rendering the course data. Therefore, it should be separated into smaller components.
 
-https://front-end-school-2-0-case-task-igvf-eu1x738l8-pie3phobic.vercel.app
+### **Changes to solve this problem:**
 
-### Description [ Також опис українською доступний внизу :) ] ->
+**1. Extracted the reducer function reducer(state, action) into a separate module `(helpers/courseReducers.js)`, so that it can be reused in other parts of the application. This would make the `Course.js` component more focused on its primary responsibility of rendering the course content, and delegate the state management responsibility to the reducer function.**
 
-This project is made with Next.JS, TailwindCSS and a few plugins for UI styling. API data is fetched using Next.JS`s function called getServerSideProps (Server-Side Rendering), Next.js will pre-render this page on each request using the data returned by getServerSideProps. To display data on pages we map through response.JSON and pass the data to components that will display it.
+```
+export function reducer(state, action) {
+  switch (action.type) {
+    case "setVideoUrl":
+      return { ...state, videoUrl: action.payload };
+    case "setNowPlaying":
+      return { ...state, nowPlaying: action.payload };
+    case "setLockedContent":
+      return { ...state, lockedContent: action.payload };
+    case "setIsPlaying":
+      return { ...state, isPlaying: action.payload };
+    case "setIsEnded":
+      return { ...state, isEnded: action.payload };
+    case "setIsReady":
+      return { ...state, isReady: action.payload };
+    default:
+      throw new Error();
+  }
+}
+```
 
-App uses a lot of UseStates to track whether the video has finished, which lesson is playing, how many seconds of video has played, has the video finished loading and is it ready to play.
-To get data for a course Id is passed as query from clicked component on courses.js page to course.js page that will make an API call using given Id as a parameter and render course.js page using received data.
+**2. Extracted the `handleUnlockedVideo` and `handleLockedVideo` functions into a separate module `(helpers/videoUtils.js)`, as they are responsible for handling the state changes related to locked and unlocked videos.**
 
-To store the duration of watched video locally we make an object in localStorage where keys are unique video urls and its' values are seconds of watchtime. When a video is loading in the ReactPlayer we search for a field with the same url as the url that we want to play and use seekTo() function to make the video play from this timestamp. Timestamp value is updated onProgress meaning that every passing second of watchtime this value is reassigned.
+```
+export function handleUnlockedVideo(dispatch, lessonRef) {
+  dispatch({ type: "setVideoUrl", payload: lessonRef.current.link });
+  dispatch({ type: "setIsEnded", payload: false });
+  dispatch({ type: "setLockedContent", payload: false });
+}
 
-Thank you <3
+export function handleLockedVideo(dispatch) {
+  dispatch({ type: "setIsLocked", payload: true });
+  dispatch({ type: "setIsEnded", payload: false });
+  dispatch({ type: "setVideoUrl", payload: "" });
+}
 
-## Completed tasks:
+```
 
-- Set up a landing page for the website.
-  ![localhost_3000_2](https://user-images.githubusercontent.com/115817261/226130116-57223bca-0ddb-48cb-9ae9-9a28e1807fe9.png)
-- Created courses.js page that displays information about the courses (courses` photos, titles, rating, skills, number of lessons).
-- Added pagination to display 10 courses on each page (in total we got 3 pages).
-  Page with all courses can be reached upon clicking on “Go to courses” button on main page, courses link in web-site header, or “Explore all” on main page's sidebar.
-  ![localhost_3000_courses](https://user-images.githubusercontent.com/115817261/226130203-f85c0fd4-8052-42ff-8c08-82b63ce893f6.png)
+**3. Extracted `VideoPlayer` component from `Course.js` page. It is responsible for rendering a `ReactPlayer` component and providing its functionality. It doesn't contain any additional logic that is not related to its main responsibility.**
 
-After clicking on any course a course.js page will load with specified course`s data.
+```
+import React, { useRef, useState, useReducer, useCallback } from "react";
+import ReactPlayer from "react-player";
+import { reducer } from "../helpers/courseReducer";
 
-- The course-preview video will automatically play after page has loaded.
-- In the Lessons panel you can select another lesson and after clicking it the corresponding video will play.
-- After finishing the lesson there will be a message notifying you that the lesson has ended.
-  ![localhost_3000_courses (1)](https://user-images.githubusercontent.com/115817261/226130382-2dd167ad-3864-45d1-9cd6-88b0d043af08.png)
+const VideoPlayer = ({ url, initialState }) => {
+  const [played, setPlayed] = useState(0);
+  const playerRef = useRef(null);
+  const [state, dispatch] = useReducer(reducer, initialState);
+  const onEnded = useCallback(() => {
+    if (!state.isEnded) {
+      if (playerRef.current.getDuration() === played) {
+        dispatch({ type: "setIsEnded", payload: true });
+        console.log(state.isEnded);
+      }
+    }
+  }, [state.isEnded, state.played]);
 
-- Progress of watched video is saved in local storage even after switching to another course
-- User can see which video is playing by looking into the “Now playing” field.
-- If the lesson is locked user will be informed about that and the video will not play.
-- Responsive adaptation for phone/tablet devices.
+  const onReady = useCallback(() => {
+    const videoDurations =
+      JSON.parse(window.localStorage.getItem("videoDurations")) || {};
+    if (JSON.stringify(videoDurations) !== "{}") {
+      let timestamp = videoDurations[playerRef.current.props.url];
+      if (timestamp > 0) {
+        playerRef.current.seekTo(timestamp, "seconds");
+        playerRef.current.play();
+      }
+    }
+    dispatch({ type: "setIsReady", payload: true });
+  }, []);
 
-\*\*Image credits: Freepic
+  return (
+    <ReactPlayer
+      ref={playerRef}
+      url={url}
+      width="100%"
+      onEnded={onEnded}
+      playing={state.isPlaying}
+      onReady={onReady}
+      muted={false}
+      controls={true}
+      onProgress={(progress) => {
+        setPlayed(progress.playedSeconds);
+        const videoDurations =
+          JSON.parse(window.localStorage.getItem("videoDurations")) || {};
+        videoDurations[url] = played;
+        window.localStorage.setItem(
+          "videoDurations",
+          JSON.stringify(videoDurations)
+        );
+      }}
+    />
+  );
+};
 
-## Опис:
+export default VideoPlayer;
 
-Цей проєкт створено з використанням Next.JS, TailwindCSS та декількома плагінами для стилізації невеликих деталей. Дані з API отримуємо за допомогою функції Next.JS під назвою getServerSideProps (рендеринг на стороні сервера). Next.js попередньо рендерить цю сторінку на сервері за кожним запитом клієнта, використовуючи дані, які повертає getServerSideProps. Для відображення даних на сторінках ми ітеруємося по даних отриманих в response.JSON і передаємо дані компонентам, які їх відображатимуть.
+```
 
-Додаток використовує багато UseStates, щоб відстежувати, чи закінчилося відео, який урок відтворюється, скільки секунд відео відтворилося, чи закінчилося завантаження відео та чи готове воно до відтворення. Щоб отримати дані для курсу за ID, від клацаного компонента на сторінці courses.js до сторінки course.js передається ID компонента через query рутера. Сторінка course.js виконає виклик API, використовуючи вказаний ідентифікатор як параметр, і візуалізує сторінку course.js, використовуючи отримані дані.
+## Results:
 
-Щоб зберігати тривалість переглянутого відео локально, ми створюємо об’єкт в localStorage, де ключі — унікальні URL-адреси відео, а його значення — секунди часу перегляду. Коли відео завантажується в ReactPlayer, ми шукаємо поле з тією ж URL-адресою, що й URL-адреса, яку ми хочемо відтворити, і використовуємо функцію seekTo(), щоб відео відтворювалося з цієї позначки часу. Значення часової позначки оновлюється під час відтворення відео, що означає, що кожну секунду перегляду це значення перевизначається.
+By breaking down the responsibilities of the `Course.js` component into smaller, more focused modules or functions, I improved the readability, maintainability, and reusability of the codebase.
 
-Дякую! <3
+- `handleUnlockedVideo()` and `handleLockedVideo()` have a specific responsibility of updating the state based on whether the video is unlocked or locked.
+- The `Course.js` component is responsible for rendering the course information and video player, and LessonCard is responsible for rendering the individual lesson information.
+- The api and reducer files are also separated out and have their own specific responsibilities.
+
+# GOF Patterns
+
+### Changes in the `fetchData.js`:
+
+**1. Implemented **Singleton** pattern with a **Factory method** used to create the singleton instance if it does not exist for API calls - before function `fetchData()` used to fetch `accessToken` every time we went to the `Courses.js` page. Now we use `ApiClient` class that will ensure that we have created only one instance of this class and every single time we have to make an API call the code will check if the instance of `ApiClient` exists, if yes, the program is going to use it, if no, it will be created.**
+
+**2. The `getInstance` method is used to retrieve the same instance of the `ApiClient` class each time it's called. The `getInstance()` method can also be counted as a factory method because it creates an instance of the `ApiClient` class if one does not already exist.
+The `instance` property is used to store the singleton instance.**
+
+```
+import fetchAccessToken from "./accessToken";
+
+class ApiClient {
+  static instance;
+  accessToken;
+  refreshTokenTimeout;
+
+  static async getInstance() {
+    if (!ApiClient.instance) {
+      ApiClient.instance = new ApiClient();
+      await ApiClient.instance.refreshToken();
+    }
+    return ApiClient.instance;
+  }
+
+  async refreshToken() {
+    try {
+      this.accessToken = await fetchAccessToken();
+      // Clear the previous timeout to prevent memory leaks
+      clearTimeout(this.refreshTokenTimeout);
+      this.refreshTokenTimeout = setTimeout(() => {
+        this.refreshToken();
+      }, 3600 * 1000);
+    } catch (error) {
+      console.error("Error refreshing access token:", error);
+      this.refreshTokenTimeout = setTimeout(() => {
+        this.refreshToken();
+      }, 60 * 1000);
+    }
+  }
+
+  async fetchData() {
+    try {
+      const host = "http://api.wisey.app";
+      const version = "api/v1";
+      const res = await fetch(`${host}/${version}/core/preview-courses`, {
+        headers: {
+          Authorization: `Bearer ${this.accessToken}`,
+        },
+      });
+      const data = await res.json();
+      return { data: data || null };
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      throw error;
+    }
+  }
+}
+
+export default ApiClient;
+
+```
+
+**3. The `accessToken` property uses incapsulation. The `accessToken` variable is private to the `ApiClient` class and can only be accessed within the class, so it is an example of encapsulation. By making the `accessToken` private, the implementation details of the `ApiClient` class are hidden from the outside world, and the implementation can be changed without affecting the code that uses the class.**
+
+_Additional changes:_
+
+- Adding a `refreshTokenTimeout` property to the `ApiClient` class to store the timeout ID, `accessToken` will be automatically refreshed every hour.
+- Adding error handling to the `refreshToken` method to handle network errors and retry in case of errors, if there was a mistake while refreshing the `accessToken`, we will try to refresh it after 1 minute.
+- Using `clearTimeout` to clear the previous timeout before scheduling the next refresh to prevent memory leaks.
+
+## Results:
+
+This will allow us to create a reusable and maintainable API client, making the code easy to use and test. By maintaining a single token instance, we avoid having to re-fetch and re-validate the token for each request, which can save time and reduce the load on the authentication server.
+
+
+-----
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
