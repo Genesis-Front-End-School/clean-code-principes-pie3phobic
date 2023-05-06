@@ -1,9 +1,4 @@
-import React, {
-  useEffect,
-  useRef,
-  useReducer,
-  MutableRefObject,
-} from "react";
+import React, { useEffect, useRef, useReducer, MutableRefObject } from "react";
 import { FireIcon, StarIcon } from "@heroicons/react/solid";
 import Header from "../components/Header";
 import LessonCard from "../components/LessonCard";
