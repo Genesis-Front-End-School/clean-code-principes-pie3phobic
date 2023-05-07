@@ -7,7 +7,10 @@ import { CourseProps } from "../helpers/types";
 
 const InfoCard: React.FC<CourseProps> = (props) => {
   return (
-    <Link data-testid="element-link" href={{ pathname: "/course", query: { id: props.id } }}>
+    <Link
+      data-testid="element-link"
+      href={{ pathname: "/course", query: { id: props.id } }}
+    >
       <div className="flex flex-col lg:flex-row py-4 lg:py-7 px-4 gap-10 border-b cursor-pointer hover:opacity-80 hover:shadow-lg transition duration-200 ease-out first:border-t last:border-t-0 ">
         <div className="relative w-[380px] h-[190px] lg:w-[380px] lg:h-[220px] md:w-full md:h-[300px] flex-shrink-0 self-center">
           <Image
@@ -34,7 +37,11 @@ const InfoCard: React.FC<CourseProps> = (props) => {
           <div className="flex-grow">
             {[props.meta.skills]?.map((item) =>
               item?.map((value, index) => (
-                <p key={`skill-${index}`} className="text-black/70" data-testid="skill" >
+                <p
+                  key={`skill-${index}`}
+                  className="text-black/70"
+                  data-testid="skill"
+                >
                   {value}
                 </p>
               ))

@@ -33,6 +33,7 @@ const Courses: React.FC<DataProps> = ({ data }) => {
           currentPage={currentPage}
           pageSize={pageSize}
           onPageChange={onPageChange}
+          data-testid="page-numbers"
         />
       </div>
     </div>

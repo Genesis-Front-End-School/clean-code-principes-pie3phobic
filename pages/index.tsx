@@ -16,11 +16,11 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Header/>
+      <Header />
       <div className="flex">
         <Sidebar />
         <div className="max-w-7xl mx-auto overflow-y-auto">
-          <Banner />
+          <Banner data-testid="banner" />
         </div>
       </div>
       <main className="max-w-7xl mx-auto px-8 sm:px-16">
