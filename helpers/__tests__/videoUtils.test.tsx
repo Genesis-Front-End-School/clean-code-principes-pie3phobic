@@ -1,7 +1,7 @@
 import { handleLockedVideo, handleUnlockedVideo } from "../videoUtils";
 
 describe("handleUnlockedVideo", () => {
-  it("should dispatch correct actions if video is unlocked", () => {
+  test("should dispatch correct actions if video is unlocked", () => {
     const mockDispatch = jest.fn();
     const lessonRef = {
       current: {
@@ -32,7 +32,7 @@ describe("handleUnlockedVideo", () => {
     });
   });
 });
-it("should dispatch correct actions if video is locked", () => {
+test("should dispatch correct actions if video is locked", () => {
   const mockDispatch = jest.fn();
 
   handleLockedVideo(mockDispatch);

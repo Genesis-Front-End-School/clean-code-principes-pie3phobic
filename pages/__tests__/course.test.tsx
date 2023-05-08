@@ -1,7 +1,4 @@
 import React, { useState } from "react";
-import InfoCard from "../../components/InfoCard";
-import Header from "../../components/Header";
-import ApiClient from "../api/getCourseData";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { rest } from "msw";
 import { setupServer } from "msw/node";
@@ -9,17 +6,6 @@ import Course, { getServerSideProps } from "../../pages/course";
 import { getCourseDataMock } from "../api/getCourseDataMock";
 import "@testing-library/jest-dom";
 import { PropsDataCourse, CourseDataProps } from "../../helpers/types";
-import {
-  handleLockedVideo,
-  handleUnlockedVideo,
-} from "../../helpers/videoUtils";
-import LessonCard from "../../components/LessonCard";
-import { fetchDataMock } from "../api/fetchDataMock";
-import {
-  GetServerSidePropsContext,
-  NextApiRequest,
-  NextApiResponse,
-} from "next";
 import fetchMock from "jest-fetch-mock";
 
 const mockApiResponse = getCourseDataMock(
@@ -33,7 +19,6 @@ const server = setupServer(
     return res(ctx.json(mockApiResponse));
   })
 );
-import fetchAccessToken from "../api/accessToken";
 
 describe("Course component", () => {
   jest.mock("../api/accessToken", () => ({
@@ -70,7 +55,7 @@ describe("Course component", () => {
       )
     ).toBeInTheDocument();
   });
-  it("displays the unlocked course content when lockedContent is false", async () => {
+  test("displays the unlocked course content when lockedContent is false", async () => {
     render(
       <Course
         data={

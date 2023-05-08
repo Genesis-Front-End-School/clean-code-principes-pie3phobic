@@ -1,8 +1,6 @@
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import LessonCard from "../LessonCard";
-import createMockRouter from "../createMockRouter";
-import { RouterContext } from "next/dist/shared/lib/router-context";
 
 const props = {
   order: 1,

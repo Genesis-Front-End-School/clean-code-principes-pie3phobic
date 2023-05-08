@@ -57,19 +57,8 @@ describe("Header component", () => {
     const newState = reducer(initialState, action);
     expect(newState.isReady).toEqual(true);
   });
-  test("Should throw error", () => {
-    const action: Action = {
-      type: null,
-      payload: null,
-    };
-    expect(error);
-  });
-
-  it("should throw an error for unknown action types", () => {
-    // arrange
+  test("should throw an error for unknown action types", () => {
     const unknownAction: Action = { type: "unknown", payload: null };
-
-    // act and assert
     expect(() => reducer(initialState, unknownAction)).toThrowError();
   });
 });

@@ -37,7 +37,6 @@ describe("InfoCard component", () => {
     const img = screen.getByAltText("Course preview image");
     expect(img).toBeInTheDocument();
     expect(img).toHaveAttribute("alt", "Course preview image");
-    // expect(img).toHaveAttribute("src", props.previewImageLink);
     expect(screen.getByTestId("heart-icon")).toBeInTheDocument();
     expect(screen.getByTestId("star-icon")).toBeInTheDocument();
     const skills = screen.getAllByTestId("skill");

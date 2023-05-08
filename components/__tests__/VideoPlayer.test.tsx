@@ -77,7 +77,7 @@ describe("VideoPlayer", () => {
     expect(reactPlayerMock).toHaveTextContent("muted: false");
     expect(reactPlayerMock).toHaveTextContent("controls: true");
   });
-  it("should call dispatch with setIsEnded when the video ends", () => {
+  test("should call dispatch with setIsEnded when the video ends", () => {
     const dispatch = jest.fn();
     render(
       <VideoPlayer

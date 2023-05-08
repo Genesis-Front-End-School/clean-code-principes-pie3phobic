@@ -4,8 +4,8 @@ import React from "react";
 import Banner from "../Banner";
 describe("Banner", () => {
   test("renders an image with the specified src and alt text", () => {
-    const { getByAltText } = render(<Banner />);
-    const image = getByAltText(
+    render(<Banner />);
+    const image = screen.getByAltText(
       "Image of student listening to an online course"
     );
     expect(image).toBeInTheDocument();
