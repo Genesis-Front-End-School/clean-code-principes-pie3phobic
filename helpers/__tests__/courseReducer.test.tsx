@@ -64,4 +64,12 @@ describe("Header component", () => {
     };
     expect(error);
   });
+
+  it("should throw an error for unknown action types", () => {
+    // arrange
+    const unknownAction: Action = { type: "unknown", payload: null };
+
+    // act and assert
+    expect(() => reducer(initialState, unknownAction)).toThrowError();
+  });
 });

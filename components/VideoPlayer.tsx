@@ -39,6 +39,7 @@ const VideoPlayer = ({
 
   return (
     <ReactPlayer
+      data-testid="actual-player"
       ref={playerRef}
       url={url}
       width="100%"

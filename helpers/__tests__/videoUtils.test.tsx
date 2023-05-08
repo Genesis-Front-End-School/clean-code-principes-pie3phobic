@@ -32,23 +32,22 @@ describe("handleUnlockedVideo", () => {
     });
   });
 });
+it("should dispatch correct actions if video is locked", () => {
+  const mockDispatch = jest.fn();
 
-// describe("Handle locked video", () => {
-//   test("should dispatch correct actions if video is locked", () => {
-//     const mockDispatch = jest.fn();
-//     handleLockedVideo(mockDispatch);
-//     expect(mockDispatch).toBeCalledTimes(3);
-//     expect(mockDispatch).toHaveBeenCalledWith({
-//       type: "setLockedConent",
-//       payload: true,
-//     });
-//     expect(mockDispatch).toHaveBeenCalledWith({
-//       type: "setIsEnded",
-//       payload: false,
-//     });
-//     expect(mockDispatch).toHaveBeenCalledWith({
-//       type: "setIsVideoUrl",
-//       payload: "",
-//     });
-//   });
-// });
+  handleLockedVideo(mockDispatch);
+
+  expect(mockDispatch).toHaveBeenCalledTimes(3);
+  expect(mockDispatch).toHaveBeenCalledWith({
+    type: "setLockedContent",
+    payload: true,
+  });
+  expect(mockDispatch).toHaveBeenCalledWith({
+    type: "setIsEnded",
+    payload: false,
+  });
+  expect(mockDispatch).toHaveBeenCalledWith({
+    type: "setVideoUrl",
+    payload: "",
+  });
+});
