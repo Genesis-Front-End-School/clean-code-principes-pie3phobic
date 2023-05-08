@@ -1,4 +1,3 @@
-import { error } from "console";
 import { State, Action, reducer } from "../courseReducer";
 describe("Header component", () => {
   const initialState: State = {

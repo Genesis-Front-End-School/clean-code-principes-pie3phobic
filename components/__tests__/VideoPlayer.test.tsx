@@ -43,7 +43,7 @@ jest.mock("react-player", () => {
     onProgress,
     getDuration,
   }) => {
-    const duration = 10; // set a mock duration value
+    const duration = 10;
     const seekTo = mock.fn();
     const play = mock.fn();
     const dispatch = jest.fn();
@@ -63,9 +63,6 @@ jest.mock("react-player", () => {
 
 describe("VideoPlayer", () => {
   test("renders the ReactPlayer with correct props", () => {
-    interface PlayerElement extends HTMLVideoElement {
-      seekTo: (timestamp: number) => void;
-    }
     const url = "https://example.com/video.mp4";
     const { getByTestId } = render(
       <VideoPlayer url={url} initialState={initialState} />

@@ -52,7 +52,10 @@ export default function Home() {
           </Link>
         </div>
         <div className="w-[300px] mx-auto lg:w-full">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 pt-20 pb-14">
+          <div
+            className="grid grid-cols-1 lg:grid-cols-3 gap-10 pt-20 pb-14"
+            data-testid="medium-cards-container"
+          >
             <MediumCard
               src="pic-11.png"
               alt="Qualified lecturer image"
