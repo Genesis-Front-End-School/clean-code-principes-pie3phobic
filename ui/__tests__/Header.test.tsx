@@ -1,5 +1,5 @@
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
-import Header from "../Header";
+import Header from "../common/Header";
 import "@testing-library/jest-dom";
 import createMockRouter from "../createMockRouter";
 import { RouterContext } from "next/dist/shared/lib/router-context";

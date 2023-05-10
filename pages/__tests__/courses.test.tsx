@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { PaginationProps, DataProps } from "../../helpers/types";
+import { PaginationProps, DataProps } from "../../domain/types";
 import { render, screen, fireEvent } from "@testing-library/react";
 import { rest } from "msw";
-import { fetchDataMock } from "../api/fetchDataMock";
+import { fetchDataMock } from "../../infrastructure/api/fetchDataMock";
 import Courses from "../../pages/courses";
 import "@testing-library/jest-dom";
 

@@ -1,4 +1,4 @@
-import { CourseDataProps, PropsDataCourse } from "../../helpers/types";
+import { CourseDataProps, PropsDataCourse } from "../../domain/types";
 export function getCourseDataMock(id: string): Promise<PropsDataCourse> {
   return Promise.resolve({
     data: {

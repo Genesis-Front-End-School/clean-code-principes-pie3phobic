@@ -1,5 +1,5 @@
 import fetchAccessToken from "./accessToken";
-import { DataProps } from "../../helpers/types";
+import { DataProps } from "../../domain/types";
 
 class ApiClient {
   static instance: ApiClient;

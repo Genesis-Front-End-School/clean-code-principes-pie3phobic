@@ -1,5 +1,5 @@
 import React from "react";
-import Pagination from "../Pagination";
+import Pagination from "../common/Pagination";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom";
 

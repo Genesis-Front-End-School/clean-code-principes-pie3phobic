@@ -1,4 +1,4 @@
-import { TokenProps } from "../../helpers/types";
+import { TokenProps } from "../../domain/types";
 const fetchAccessToken = async (): Promise<TokenProps> => {
   const host: string = "http://api.wisey.app";
   const version: string = "api/v1";

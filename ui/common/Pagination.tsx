@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "../../styles/Home.module.css";
-import { PaginationProps } from "../../helpers/types";
+import { PaginationProps } from "../../domain/types";
 
 const Pagination: React.FC<PaginationProps> = ({
   items,

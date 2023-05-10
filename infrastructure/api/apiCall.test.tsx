@@ -1,4 +1,4 @@
-import { getServerSideProps } from "../courses";
+import { getServerSideProps } from "../../pages/courses";
 import { fetchDataMock } from "./fetchDataMock";
 import ApiClient from "./getCourseData";
 

@@ -1,6 +1,6 @@
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import LessonCard from "../LessonCard";
+import LessonCard from "../course/LessonCard";
 
 const props = {
   order: 1,

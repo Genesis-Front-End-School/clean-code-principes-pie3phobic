@@ -1,6 +1,6 @@
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import Sidebar from "../Sidebar";
+import Sidebar from "../index/Sidebar";
 import createMockRouter from "../createMockRouter";
 import { RouterContext } from "next/dist/shared/lib/router-context";
 let router = createMockRouter({});

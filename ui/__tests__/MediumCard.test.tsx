@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import React from "react";
-import MediumCard from "../MediumCard";
+import MediumCard from "../index/MediumCard";
 
 describe("MediumCard", () => {
   const props = {

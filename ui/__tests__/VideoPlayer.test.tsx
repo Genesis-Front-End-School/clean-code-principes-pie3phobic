@@ -1,4 +1,4 @@
-import VideoPlayer from "../VideoPlayer";
+import VideoPlayer from "../course/VideoPlayer";
 import {
   render,
   screen,
@@ -9,7 +9,7 @@ import {
 import "@testing-library/jest-dom";
 import React, { useRef, useState, useReducer, useCallback } from "react";
 import userEvent from "@testing-library/user-event";
-import { Action, State, reducer } from "../../helpers/courseReducer";
+import { Action, State, reducer } from "../../domain/courseReducer";
 import { mock } from "node:test";
 
 const localStorageMock = (() => {

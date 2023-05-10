@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import React from "react";
-import Banner from "../Banner";
+import Banner from "../index/Banner";
 describe("Banner", () => {
   test("renders an image with the specified src and alt text", () => {
     render(<Banner />);

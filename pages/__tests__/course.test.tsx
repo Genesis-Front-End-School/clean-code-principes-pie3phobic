@@ -3,9 +3,9 @@ import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { rest } from "msw";
 import { setupServer } from "msw/node";
 import Course, { getServerSideProps } from "../../pages/course";
-import { getCourseDataMock } from "../api/getCourseDataMock";
+import { getCourseDataMock } from "../../infrastructure/api/getCourseDataMock";
 import "@testing-library/jest-dom";
-import { PropsDataCourse, CourseDataProps } from "../../helpers/types";
+import { PropsDataCourse, CourseDataProps } from "../../domain/types";
 import fetchMock from "jest-fetch-mock";
 
 const mockApiResponse = getCourseDataMock(
@@ -21,7 +21,7 @@ const server = setupServer(
 );
 
 describe("Course component", () => {
-  jest.mock("../api/accessToken", () => ({
+  jest.mock("../../infrastructure/api/accessToken", () => ({
     __esModule: true,
     default: jest.fn(),
   }));

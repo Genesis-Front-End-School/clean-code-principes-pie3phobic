@@ -1,4 +1,4 @@
-import { DataProps } from "../../helpers/types";
+import { DataProps } from "../../domain/types";
 
 export function fetchDataMock(): Promise<DataProps> {
   return Promise.resolve({

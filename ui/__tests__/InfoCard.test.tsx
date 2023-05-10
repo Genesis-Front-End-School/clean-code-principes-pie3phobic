@@ -1,6 +1,6 @@
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import InfoCard from "../InfoCard";
+import InfoCard from "../courses/InfoCard";
 import createMockRouter from "../createMockRouter";
 import { RouterContext } from "next/dist/shared/lib/router-context";
 const props = {
