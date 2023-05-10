@@ -47,6 +47,17 @@ Reorganized components folder: divided all previous components into according fo
 The UI Layer also called Presentation or Interface Layer includes all reusable, presentational components.
 These components are kept simple and easy to reuse excluding any business logic.
 
+## Domen Layer:
+![image](https://github.com/Genesis-Front-End-School/clean-code-principes-pie3phobic/assets/115817261/7f9b6630-1aa0-4e0e-bbfe-d63181110479)
+
+## Application Layer:
+![image](https://github.com/Genesis-Front-End-School/clean-code-principes-pie3phobic/assets/115817261/1120364c-e7e5-4f44-a8f2-1e99fd97a01f)
+
+## Infrastructure folder:
+![image](https://github.com/Genesis-Front-End-School/clean-code-principes-pie3phobic/assets/115817261/53926df9-b09f-400d-9953-b0c8538c3cd9)
+
+
+
 
 -----
 
