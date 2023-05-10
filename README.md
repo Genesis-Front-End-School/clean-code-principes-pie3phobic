@@ -2,7 +2,7 @@
 
 # Implemented Clean Layers Architecture
 
-Folder structure before:
+Folder structure before: (mostly generated from default create-next-app template)
 ```
 ├───components
 │   └───__tests__
@@ -18,7 +18,7 @@ Folder structure after:
 │   └───__tests__
 ├───infrastructure
 │   └───api
-├───pages
+├───pages (due to NextJs framework`s specific rules this folder could not have been renamed to application )
 │   └───__tests__
 └───ui
     ├───common
@@ -38,24 +38,28 @@ This scheme means that the Infrastructure Layer is shared across all other layer
 A -> B means than A "sees" B and can import from it
 
 ## UI Layer:
-Reorganized components folder: divided all previous components into according folders inside /ui folder.
-- Common folder includes components thar are reused all across the pages (for example, header, footer, etc.);
-- Index, Course, Courses folders include specific components that will be rendered only accordingly to their specific pages
-![image](https://github.com/Genesis-Front-End-School/clean-code-principes-pie3phobic/assets/115817261/725f5d67-6ecf-409f-86d6-9dff1ab14158)
 The UI Layer also called Presentation or Interface Layer includes all reusable, presentational components.
 These components are kept simple and easy to reuse excluding any business logic.
+Reorganized components folder: divided all previous components into according folders inside /ui folder.
+- /Common folder includes components thar are reused all across the pages (for example, header, footer, etc.);
+- /Index, /Course, /Courses folders include specific components that will be rendered only accordingly to their specific pages
+![image](https://github.com/Genesis-Front-End-School/clean-code-principes-pie3phobic/assets/115817261/89344ca7-8689-4279-a32b-50aa2e1366f7)
 
-## Domen Layer:
-![image](https://github.com/Genesis-Front-End-School/clean-code-principes-pie3phobic/assets/115817261/7f9b6630-1aa0-4e0e-bbfe-d63181110479)
+
+## Domain Layer:
+Provides all needed business logic and helper functions so application can work correctly.
+By separating the Domain layer from other layers, such as the Infrastructure layer, I achieve a more modular and flexible architecture. This makes it easier to modify or replace components of the application without affecting the other layers, as long as the interfaces between them are maintained.
+![image](https://github.com/Genesis-Front-End-School/clean-code-principes-pie3phobic/assets/115817261/c7309416-7bf0-4d6d-bcf9-a5c5031ecc3b)
 
 ## Application Layer:
+Application Layer is the glue code that puts together the entire application and contains components at the top components tree. It defines routing, builds pages from presentational components, and populates common context for the rest of the app.
 ![image](https://github.com/Genesis-Front-End-School/clean-code-principes-pie3phobic/assets/115817261/1120364c-e7e5-4f44-a8f2-1e99fd97a01f)
 
-## Infrastructure folder:
+## Infrastructure Layer:
+The infrastructure layer is responsible for handling the implementation details the application, such as network communication, database access, and external integrations.
+In a Next.js application, the API folder contains functions that handle incoming requests, perform any necessary business logic, and return the appropriate responses. Since that code is specific to the technology it would belong in the infrastructure layer.
+By placing API code in the infrastructure layer,we isolate it from the rest of the application logic and ensure that it adheres to the clean architecture principles of modularity and separation of concerns.
 ![image](https://github.com/Genesis-Front-End-School/clean-code-principes-pie3phobic/assets/115817261/53926df9-b09f-400d-9953-b0c8538c3cd9)
-
-
-
 
 -----
 
