@@ -30,14 +30,12 @@ Folder structure after:
 
 # Layers Implementation
 
+Clean Architecture is a layered front-end architecture that emphasizes separation of concerns and testability. The architecture includes multiple layers, such as presentation, domain, and infrastructure and application. The presentation layer handles user input and output, the domain layer contains business logic, application layer organizes interactionss between different modules of the application and the infrastructure layer provides external dependencies and interfaces with the outside world, in my example this layers works with API functionality.
+
 ![image](https://github.com/Genesis-Front-End-School/clean-code-principes-pie3phobic/assets/115817261/15511ad0-285a-44aa-ae9e-458d7264f2d4)
 
-The most important rule is that a layer shouldn't be aware of any layers above it. This is expressed by the direction of arrows and understanding it is fundamental. Those are a few ways to understand what relation A -> B means:
-
-A has reference of B
-A knows about B
-A can import from B (B can't import from A)
-A is looking into B
+This scheme means that the Infrastructure Layer is shared across all other layers. The Application Layer can reference code in the Domain Layer and UI Layer (a layer below).  UI Layer can import code from the shared Infrastructure layer.
+A -> B means than A "sees" B and can import from it
 
 ## UI Layer:
 Reorganized components folder: divided all previous components into according folders inside /ui folder.
