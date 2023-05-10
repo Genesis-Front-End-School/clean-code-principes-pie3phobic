@@ -1,9 +1,9 @@
 import Head from "next/head";
-import Banner from "../components/Banner";
-import Footer from "../components/Footer";
-import Header from "../components/Header";
-import Sidebar from "../components/Sidebar";
-import MediumCard from "../components/MediumCard";
+import Banner from "../ui/index/Banner";
+import Footer from "../ui/common/Footer";
+import Header from "../ui/common/Header";
+import Sidebar from "../ui/index/Sidebar";
+import MediumCard from "../ui/index/MediumCard";
 import Link from "next/link";
 import React from "react";
 

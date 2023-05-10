@@ -3,7 +3,7 @@ import Image from "next/image";
 import { HeartIcon } from "@heroicons/react/outline";
 import { StarIcon } from "@heroicons/react/solid";
 import Link from "next/link";
-import { CourseProps } from "../helpers/types";
+import { CourseProps } from "../../helpers/types";
 
 const InfoCard: React.FC<CourseProps> = (props) => {
   return (

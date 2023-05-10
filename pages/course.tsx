@@ -1,16 +1,12 @@
 import React, { useEffect, useRef, useReducer, MutableRefObject } from "react";
 import { FireIcon, StarIcon } from "@heroicons/react/solid";
-import Header from "../components/Header";
-import LessonCard from "../components/LessonCard";
-import ApiClient from "./api/getCourseData";
-import { Action, State, reducer } from "../helpers/courseReducer";
-import VideoPlayer from "../components/VideoPlayer";
-import { handleUnlockedVideo, handleLockedVideo } from "../helpers/videoUtils";
-import {
-  CourseDataProps,
-  LessonProps,
-  PropsDataCourse,
-} from "../helpers/types";
+import Header from "../ui/common/Header";
+import LessonCard from "../ui/course/LessonCard";
+import ApiClient from "../infrastructure/api/getCourseData";
+import { Action, State, reducer } from "../domain/courseReducer";
+import VideoPlayer from "../ui/course/VideoPlayer";
+import { handleUnlockedVideo, handleLockedVideo } from "../domain/videoUtils";
+import { CourseDataProps, LessonProps, PropsDataCourse } from "../domain/types";
 import { GetServerSidePropsContext } from "next";
 const Course: React.FC<PropsDataCourse> = ({ data }) => {
   const lessonData = data.lessons;

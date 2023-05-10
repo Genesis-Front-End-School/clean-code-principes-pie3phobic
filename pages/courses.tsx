@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import InfoCard from "../components/InfoCard";
-import Header from "../components/Header";
-import Pagination from "../components/Pagination";
-import { paginate } from "../helpers/paginate";
-import ApiClient from "./api/fetchData";
-import { CourseProps } from "../helpers/types";
-import { PaginationProps, DataProps } from "../helpers/types";
+import InfoCard from "../ui/courses/InfoCard";
+import Header from "../ui/common/Header";
+import Pagination from "../ui/common/Pagination";
+import { paginate } from "../domain/paginate";
+import ApiClient from "../infrastructure/api/fetchData";
+import { CourseProps } from "../domain/types";
+import { PaginationProps, DataProps } from "../domain/types";
 const Courses: React.FC<DataProps> = ({ data }) => {
   const coursesData: CourseProps[] = data.courses;
   const [currentPage, setCurrentPage] = useState<number>(1);

@@ -1,6 +1,6 @@
 import { LessonProps } from "./types";
 import { Dispatch } from "react";
-import { Action, State } from "../helpers/courseReducer";
+import { Action, State } from "./courseReducer";
 
 export function handleUnlockedVideo(
   dispatch: Dispatch<Action>,
