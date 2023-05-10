@@ -3,21 +3,20 @@ import { CourseDataProps } from "../../domain/types";
 
 class ApiClient {
   static instance: ApiClient;
-  accessToken: string;
-
+  #accessToken: string;
   static async getInstance() {
     if (!ApiClient.instance) {
       ApiClient.instance = new ApiClient();
       await ApiClient.instance.refreshToken();
+      setInterval(() => {
+        ApiClient.instance.refreshToken();
+      }, 3600 * 1000);
     }
     return ApiClient.instance;
   }
 
   async refreshToken(): Promise<void> {
-    this.accessToken = await fetchAccessToken();
-    setTimeout(() => {
-      this.refreshToken();
-    }, 3600 * 1000);
+    this.#accessToken = await fetchAccessToken();
   }
 
   async getCourseData(id: string): Promise<{ data: CourseDataProps }> {
@@ -26,7 +25,7 @@ class ApiClient {
       const version: string = "api/v1";
       const res = await fetch(`${host}/${version}/core/preview-courses/${id}`, {
         headers: {
-          Authorization: `Bearer ${this.accessToken}`,
+          Authorization: `Bearer ${this.#accessToken}`,
         },
       });
       const data: CourseDataProps = (await res.json()) as CourseDataProps;
@@ -38,7 +37,7 @@ class ApiClient {
   }
 
   getToken() {
-    return this.accessToken;
+    return this.#accessToken;
   }
 }
 

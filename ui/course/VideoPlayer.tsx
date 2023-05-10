@@ -22,8 +22,7 @@ const VideoPlayer = ({
   );
 
   const onEnded = useCallback(() => {
-    dispatch(onEndedLogic(state, played, playerRef));
-    //dispatch({ type: "setIsEnded", payload: true });
+    onEndedLogic(state, played, dispatch, playerRef);
   }, [played, state]);
 
   const onReady = useCallback(() => {
