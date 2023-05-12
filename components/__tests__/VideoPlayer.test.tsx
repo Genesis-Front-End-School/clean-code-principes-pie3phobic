@@ -1,11 +1,5 @@
 import VideoPlayer from "../VideoPlayer";
-import {
-  render,
-  screen,
-  fireEvent,
-  waitFor,
-  act,
-} from "@testing-library/react";
+import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import React, { useRef, useState, useReducer, useCallback } from "react";
 import userEvent from "@testing-library/user-event";

@@ -25,21 +25,21 @@ describe("InfoCard component", () => {
   test("renders course card with all properties correctly", () => {
     render(<InfoCard {...props} />);
     const title = screen.getByText(props.title);
-    expect(title).toBeInTheDocument();
     const description = screen.getByText(props.description);
-    expect(description).toBeInTheDocument();
     const lessonsCount = screen.getByText(
       `Number of lessons: ${props.lessonsCount}`
     );
-    expect(lessonsCount).toBeInTheDocument();
     const rating = screen.getByText(props.rating);
-    expect(rating).toBeInTheDocument();
     const img = screen.getByAltText("Course preview image");
+    const skills = screen.getAllByTestId("skill");
+    expect(title).toBeInTheDocument();
+    expect(description).toBeInTheDocument();
+    expect(lessonsCount).toBeInTheDocument();
+    expect(rating).toBeInTheDocument();
     expect(img).toBeInTheDocument();
     expect(img).toHaveAttribute("alt", "Course preview image");
     expect(screen.getByTestId("heart-icon")).toBeInTheDocument();
     expect(screen.getByTestId("star-icon")).toBeInTheDocument();
-    const skills = screen.getAllByTestId("skill");
     expect(skills).toHaveLength(props.meta.skills.length);
     skills.forEach((skill, index) => {
       expect(skill).toHaveTextContent(props.meta.skills[index]);
