@@ -1,12 +1,19 @@
+import React from "react";
 import styles from "../styles/Home.module.css";
-const Pagination = ({ items, pageSize, currentPage, onPageChange }) => {
-  const pagesCount = Math.ceil(items / pageSize);
+import { PaginationProps } from "../helpers/types";
 
+const Pagination: React.FC<PaginationProps> = ({
+  items,
+  pageSize,
+  currentPage,
+  onPageChange,
+}) => {
+  const pagesCount: number = Math.ceil(items / pageSize);
   if (pagesCount === 1) return null;
-  const pages = Array.from({ length: pagesCount }, (_, i) => i + 1);
+  const pages: number[] = Array.from({ length: pagesCount }, (_, i) => i + 1);
 
   return (
-    <div>
+    <div data-testid="pagination">
       <ul className={styles.pagination}>
         {pages.map((page) => (
           <li
