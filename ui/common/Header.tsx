@@ -24,10 +24,11 @@ function Header() {
     const newIsDarkMode = !isDarkMode;
     setIsDarkMode(newIsDarkMode);
     document.documentElement.classList.toggle("dark");
-    localStorage.setItem("isDarkMode", newIsDarkMode.toString());
+    window.localStorage.setItem("isDarkMode", newIsDarkMode.toString());
   }
   useEffect(() => {
-    const savedIsDarkMode = localStorage.getItem("isDarkMode") === "true";
+    const savedIsDarkMode =
+      window.localStorage.getItem("isDarkMode") === "true";
     setIsDarkMode(
       savedIsDarkMode ||
         (window.matchMedia &&
