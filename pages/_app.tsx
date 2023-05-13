@@ -1,6 +1,7 @@
 import "../styles/globals.css";
 import ProgressBar from "@badrap/bar-of-progress";
 import Router from "next/router";
+import "tailwindcss/tailwind.css";
 
 const progress = new ProgressBar({
   size: 4,

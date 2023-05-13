@@ -1,8 +1,8 @@
 import React from "react";
 function Footer() {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-4 gap-y-10 px-32 py-14 bg-gray-100 mt-14">
-      <div className="space-y-4 text-xs text-gray-800">
+    <div className="grid grid-cols-1 md:grid-cols-4 gap-y-10 px-32 py-14 bg-gray-100 mt-14 dark:bg-gray-950">
+      <div className="space-y-4 text-xs text-gray-800 dark:text-white">
         <h5 className="font-bold">ABOUT</h5>
         <p>How StudyLab works</p>
         <p>Newsroom</p>
@@ -10,7 +10,7 @@ function Footer() {
         <p>Payment</p>
         <p>Resources</p>
       </div>
-      <div className="space-y-4 text-xs text-gray-800">
+      <div className="space-y-4 text-xs text-gray-800 dark:text-white">
         <h5 className="font-bold">COMMUNITY</h5>
         <p>Accesibility</p>
         <p>This is not a real site</p>
@@ -18,7 +18,7 @@ function Footer() {
         <p>Referrals accepted</p>
         <p>Privacy Policy</p>
       </div>
-      <div className="space-y-4 text-xs text-gray-800">
+      <div className="space-y-4 text-xs text-gray-800 dark:text-white">
         <h5 className="font-bold">LEARNING</h5>
         <p>Academy</p>
         <p>Qualifications</p>
@@ -26,7 +26,7 @@ function Footer() {
         <p>For students</p>
         <p>For teachers</p>
       </div>
-      <div className="space-y-4 text-xs text-gray-800">
+      <div className="space-y-4 text-xs text-gray-800 dark:text-white">
         <h5 className="font-bold">SUPPORT</h5>
         <p>Help Centre</p>
         <p>Trust & Safety</p>

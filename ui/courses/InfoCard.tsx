@@ -31,7 +31,7 @@ const InfoCard: React.FC<CourseProps> = (props) => {
           </div>
           <h4 className="text-black/60 font-semibold">{props.description}</h4>
           <div className="border-b w-10 pt-2" />
-          <p className="pt-2 text-sm text-red-400">
+          <p className="pt-2 text-sm text-red-400 dark:text-purple-accent">
             Number of lessons: {props.lessonsCount}
           </p>
           <div className="flex-grow">
