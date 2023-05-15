@@ -17,7 +17,7 @@ function Header() {
         <div className="relative flex items-center h-10 cursor-pointer my-auto">
           <img
             src={`${isDarkMode ? "logo-dark.png" : "logo-study.png"}`}
-            width={`${isDarkMode ? "100px" : "100px"}`}
+            width={`${isDarkMode ? "92px" : "100px"}`}
             alt="StudyLab logo"
           />
         </div>

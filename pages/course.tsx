@@ -88,8 +88,6 @@ const Course: React.FC<PropsDataCourse> = ({ data }) => {
             </div>
           </div>
           <div className="flex flex-col bg-gray-200 h-[560px] w-[310px] lg:w-[500px] overflow-scroll rounded-3xl lg:absolute pb-8 scrollbar-hide md:w-[686px] lg:top-80 lg:right-0 dark:bg-slate-800">
-            {/* dark:bg-gray-950 */}
-            {/* dark:bg-slate-800 */}
             <p className="pl-10 pt-6 pb-4 text-xl font-semibold dark:text-white">
               Lessons:
             </p>

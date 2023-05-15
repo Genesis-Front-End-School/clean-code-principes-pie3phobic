@@ -16,8 +16,6 @@ const LessonCard: React.FC<LessonProps> = ({
 }) => {
   return (
     <div>
-      {/* dark:bg-gray-400/70 */}
-      {/* dark:bg-gray-600  */}
       <div className="flex rounded-2xl bg-white h-20 md:h-28 w-[250px] md:w-[400px] my-2 mx-auto cursor-pointer items-center active:bg-red-400 dark:bg-gray-600 dark:active:bg-purple-accent">
         <img
           src={`${previewImageLink}/lesson-${order}.webp`}
