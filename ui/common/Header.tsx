@@ -22,7 +22,7 @@ function Header() {
           />
         </div>
       </Link>
-      <div className="flex items-center dark:bg-gray-600 dark:border-0 md:border-2 rounded-full py-2 md:shadow-sm">
+      <div className="flex items-center lg:dark:bg-gray-600 dark:border-0 md:border-2 rounded-full py-2 md:shadow-sm">
         <input
           value={searchInput}
           onChange={(e) => setSearchInput(e.target.value)}
@@ -42,18 +42,27 @@ function Header() {
           <MenuIcon data-testid="menu-icon" className="h-6" />
           <UserCircleIcon data-testid="user-icon" className="h-6" />
         </div>
-        {!isDarkMode && (
-          <MoonIcon
-            className="h-10 p-2 border-2 rounded-full hover:bg-gray-100 dark:text-white dark:hover:bg-gray-950"
-            onClick={toggleDarkMode}
-          />
-        )}
-        {isDarkMode && (
-          <SunIcon
-            className="h-10 p-2 border-2 rounded-full hover:bg-gray-100 dark:text-white dark:hover:bg-gray-950"
-            onClick={toggleDarkMode}
-          />
-        )}
+        <div className="relative flex items-center h-10 w-10 lg:w-[80.5px] rounded-3xl lg:border-y-2 lg:border-l-1 lg:border-r-2 dark:lg:border-l-2 dark:lg:border-r-2 border-0 border-gray-200">
+          <div className="absolute h-10 w-10 flex items-center justify-center transition-all duration-500">
+            {!isDarkMode && (
+              <MoonIcon
+                className="z-50 h-10 p-2 border-2 rounded-full hover:bg-gray-100 dark:text-white dark:hover:bg-gray-950 transform translate-x-0"
+                onClick={toggleDarkMode}
+              />
+            )}
+            {isDarkMode && (
+              <SunIcon
+                className="z-50 h-10 p-2 border-2 rounded-full hover:bg-gray-100 dark:text-white dark:hover:bg-gray-950 transform translate-x-0 lg:translate-x-full"
+                onClick={toggleDarkMode}
+              />
+            )}
+          </div>
+          <div
+            className={`absolute h-10 w-10 rounded-fulltransition-all duration-300 ${
+              isDarkMode ? "right-0" : "left-0"
+            }`}
+          ></div>
+        </div>
       </div>
     </header>
   );
