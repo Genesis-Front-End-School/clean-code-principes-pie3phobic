@@ -10,16 +10,6 @@ import Link from "next/link";
 function Header() {
   const [searchInput, setSearchInput] = useState<string>("");
   const [isDarkMode, setIsDarkMode] = useState(false);
-  // useEffect(() => {
-  //   setIsDarkMode(
-  //     window.matchMedia &&
-  //       window.matchMedia("(prefers-color-scheme: dark)").matches
-  //   );
-  // }, []);
-  // function toggleDarkMode() {
-  //   setIsDarkMode(!isDarkMode);
-  //   document.documentElement.classList.toggle("dark");
-  // }
   function toggleDarkMode() {
     const newIsDarkMode = !isDarkMode;
     setIsDarkMode(newIsDarkMode);
@@ -35,15 +25,20 @@ function Header() {
           window.matchMedia("(prefers-color-scheme: dark)").matches)
     );
   }, []);
+  useEffect(() => {
+    if (isDarkMode) {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+  }, [isDarkMode]);
 
   return (
     <header className="sticky top-0 z-50 grid grid-cols-3 bg-white py-5 px-5 md:px-10 dark:bg-blue-950">
       <Link data-trstid="logo-link" href={{ pathname: "/" }}>
         <div className="relative flex items-center h-10 cursor-pointer my-auto">
-          {/* <img src="logo-study.png" width="100px" alt="StudyLab logo" /> */}
           <img
             src={`${isDarkMode ? "logo-dark.png" : "logo-study.png"}`}
-            //width="100px"
             width={`${isDarkMode ? "100px" : "100px"}`}
             alt="StudyLab logo"
           />
@@ -61,7 +56,6 @@ function Header() {
       </div>
       <div className="flex items-center space-x-4 justify-end text-gray-600">
         <Link data-testid="courses-link" href={{ pathname: "/courses" }}>
-          {/* <Link data-testid="courses-link" href="/courses"> */}
           <p className="hidden md:inline cursor-pointer text-lg dark:text-white dark:hover:text-purple-accent">
             Courses
           </p>
@@ -82,10 +76,6 @@ function Header() {
             onClick={toggleDarkMode}
           />
         )}
-        {/* <MoonIcon
-          className="h-10 p-2 border-2 rounded-full hover:bg-gray-100 dark:text-white dark:hover:bg-gray-950"
-          onClick={toggleDarkMode}
-        /> */}
       </div>
     </header>
   );
