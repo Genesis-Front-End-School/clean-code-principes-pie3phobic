@@ -7,32 +7,10 @@ import {
 } from "@heroicons/react/solid";
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import { useThemeToggle } from "../../domain/useThemeToggle";
 function Header() {
   const [searchInput, setSearchInput] = useState<string>("");
-  const [isDarkMode, setIsDarkMode] = useState(false);
-  function toggleDarkMode() {
-    const newIsDarkMode = !isDarkMode;
-    setIsDarkMode(newIsDarkMode);
-    document.documentElement.classList.toggle("dark");
-    window.localStorage.setItem("isDarkMode", newIsDarkMode.toString());
-  }
-  useEffect(() => {
-    const savedIsDarkMode =
-      window.localStorage.getItem("isDarkMode") === "true";
-    setIsDarkMode(
-      savedIsDarkMode ||
-        (window.matchMedia &&
-          window.matchMedia("(prefers-color-scheme: dark)").matches)
-    );
-  }, []);
-  useEffect(() => {
-    if (isDarkMode) {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
-  }, [isDarkMode]);
-
+  const { isDarkMode, toggleDarkMode } = useThemeToggle();
   return (
     <header className="sticky top-0 z-50 grid grid-cols-3 bg-white py-5 px-5 md:px-10 dark:bg-blue-950">
       <Link data-trstid="logo-link" href={{ pathname: "/" }}>
