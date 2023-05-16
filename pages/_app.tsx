@@ -5,7 +5,6 @@ import "tailwindcss/tailwind.css";
 
 const progress = new ProgressBar({
   size: 4,
-  //color: "#FE595E",
   color: "#d1d5db",
   className: "z-50",
   delay: 100,
