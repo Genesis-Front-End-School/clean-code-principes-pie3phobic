@@ -30,37 +30,42 @@ const Course: React.FC<PropsDataCourse> = ({ data }) => {
   }, []);
 
   return (
-    <div>
+    <div className="dark:bg-blue-950">
       <Header />
       <div className="ml-10">
         <div>
           <div className="flex flex-col">
-            <h1 className="text-3xl font-semibold pb-2">{data.title}</h1>
-            <p className="pb-6 text-lg">{data.description}</p>
+            <h1 className="text-3xl font-semibold pb-2 dark:text-white">
+              {data.title}
+            </h1>
+            <p className="pb-6 text-lg dark:text-white">{data.description}</p>
             <div className="pb-4">
-              <a className="bg-red-400/80 px-2 py-1 rounded-3xl text-black/60">
+              <a className="bg-red-400/80 px-2 py-1 rounded-3xl text-black/60 dark:text-white dark:bg-purple-accent">
                 #{data.tags}
               </a>
               <div className="flex align-middle mt-2 mb-8">
-                <FireIcon className="h-5 text-red-400" />
-                <a className="text-red-400 text-sm font-semibold">
+                <FireIcon className="h-5 text-red-400 dark:text-purple-accent" />
+                <a className="text-red-400 text-sm font-semibold dark:text-purple-accent">
                   Launched on: {data.launchDate.split("T")[0]}
                 </a>
               </div>
               <div className="flex">
-                <StarIcon className="h-6 text-red-400" />
-                <a className="font-bold">{data.rating}</a>
+                <StarIcon className="h-6 text-red-400 dark:text-purple-accent" />
+                <a className="font-bold dark:text-white/90">{data.rating}</a>
               </div>
               <div className="flex-grow">
                 {[data.meta.skills]?.map((item) =>
                   item?.map((value, index) => (
-                    <p key={`skill-${index}`} className="text-black/70">
+                    <p
+                      key={`skill-${index}`}
+                      className="text-black/70 dark:text-white"
+                    >
                       {value}
                     </p>
                   ))
                 )}
               </div>
-              <p className="font-semibold pt-4 text-lg">
+              <p className="font-semibold pt-4 text-lg dark:text-white">
                 Now Playing: {state.nowPlaying}
               </p>
               <div className="pt-4">
@@ -82,8 +87,10 @@ const Course: React.FC<PropsDataCourse> = ({ data }) => {
               <VideoPlayer url={state.videoUrl} initialState={initialState} />
             </div>
           </div>
-          <div className="flex flex-col bg-gray-200 h-[560px] w-[310px] lg:w-[500px] overflow-scroll rounded-3xl lg:absolute pb-8 scrollbar-hide md:w-[686px] lg:top-80 lg:right-0">
-            <p className="pl-10 pt-6 pb-4 text-xl font-semibold">Lessons:</p>
+          <div className="flex flex-col bg-gray-200 h-[560px] w-[310px] lg:w-[500px] overflow-scroll rounded-3xl lg:absolute pb-8 scrollbar-hide md:w-[686px] lg:top-80 lg:right-0 dark:bg-slate-800">
+            <p className="pl-10 pt-6 pb-4 text-xl font-semibold dark:text-white">
+              Lessons:
+            </p>
             {lessonData.map((lesson) => (
               <div
                 key={lesson.id}
@@ -106,6 +113,7 @@ const Course: React.FC<PropsDataCourse> = ({ data }) => {
             ))}
           </div>
         </div>
+        <div className="h-[40px] w-full bg-white dark:bg-blue-950"></div>
       </div>
     </div>
   );
