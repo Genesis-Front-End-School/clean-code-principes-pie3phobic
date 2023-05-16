@@ -12,7 +12,7 @@ function Header() {
   const [searchInput, setSearchInput] = useState<string>("");
   const { isDarkMode, toggleDarkMode } = useThemeToggle();
   return (
-    <header className="sticky top-0 z-50 grid grid-cols-3 bg-white py-5 px-5 md:px-10 dark:bg-blue-950">
+    <header className="sticky top-0 z-50 grid grid-cols-3 bg-white py-5 px-12 md:px-10 dark:bg-blue-950">
       <Link data-trstid="logo-link" href={{ pathname: "/" }}>
         <div className="relative flex items-center h-10 cursor-pointer my-auto">
           <img
@@ -28,7 +28,7 @@ function Header() {
           onChange={(e) => setSearchInput(e.target.value)}
           className="flex-grow pl-5 bg-transparent outline-none text-sm text-gray-600 dark:text-white placeholder-gray-400 dark:placeholder-gray-200"
           type="text"
-          placeholder={"Start your search"}
+          placeholder={"Start search"}
         />
         <SearchIcon className="hidden md:inline-flex h-8 bg-red-400 dark:bg-purple-accent text-white rounded-full p-2 cursor-pointer md:mx-2" />
       </div>
@@ -58,7 +58,7 @@ function Header() {
             )}
           </div>
           <div
-            className={`absolute h-10 w-10 rounded-fulltransition-all duration-300 ${
+            className={`absolute h-10 w-10 rounded-fulltransition-all duration-300  ${
               isDarkMode ? "right-0" : "left-0"
             }`}
           ></div>
