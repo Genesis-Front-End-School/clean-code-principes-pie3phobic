@@ -1,13 +1,7 @@
-import React, {
-  useEffect,
-  useRef,
-  useReducer,
-  MutableRefObject,
-} from "react";
+import React, { useEffect, useRef, useReducer, MutableRefObject } from "react";
 import { FireIcon, StarIcon } from "@heroicons/react/solid";
 import Header from "../components/Header";
 import LessonCard from "../components/LessonCard";
-import ApiClient from "./api/getCourseData";
 import { Action, State, reducer } from "../helpers/courseReducer";
 import VideoPlayer from "../components/VideoPlayer";
 import { handleUnlockedVideo, handleLockedVideo } from "../helpers/videoUtils";
@@ -17,6 +11,7 @@ import {
   PropsDataCourse,
 } from "../helpers/types";
 import { GetServerSidePropsContext } from "next";
+import FetchCourseDataApiClient from "./api/getCourseData";
 const Course: React.FC<PropsDataCourse> = ({ data }) => {
   const lessonData = data.lessons;
   const initialState = {
@@ -124,9 +119,8 @@ export const getServerSideProps = async (
   context: GetServerSidePropsContext
 ) => {
   const { id } = context.query;
-  const apiClient = await ApiClient.getInstance();
-  const { data }: { data: CourseDataProps } = await apiClient.getCourseData(
-    id as string
-  );
+  const fetchCourseDataApiClient = await FetchCourseDataApiClient.getInstance();
+  const { data }: { data: CourseDataProps } =
+    await fetchCourseDataApiClient.fetchData(id as string);
   return { props: { data } };
 };

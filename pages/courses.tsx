@@ -3,9 +3,9 @@ import InfoCard from "../components/InfoCard";
 import Header from "../components/Header";
 import Pagination from "../components/Pagination";
 import { paginate } from "../helpers/paginate";
-import ApiClient from "./api/fetchData";
 import { CourseProps } from "../helpers/types";
 import { PaginationProps, DataProps } from "../helpers/types";
+import FetchDataApiClient from "./api/fetchData";
 const Courses: React.FC<DataProps> = ({ data }) => {
   const coursesData: CourseProps[] = data.courses;
   const [currentPage, setCurrentPage] = useState<number>(1);
@@ -41,7 +41,7 @@ const Courses: React.FC<DataProps> = ({ data }) => {
 
 export default Courses;
 export const getServerSideProps = async () => {
-  const apiClient = await ApiClient.getInstance();
-  const { data }: { data: DataProps } = await apiClient.fetchData();
+  const fetchDataClient = await FetchDataApiClient.getInstance();
+  const { data } = await fetchDataClient.fetchData();
   return { props: { data } };
 };
