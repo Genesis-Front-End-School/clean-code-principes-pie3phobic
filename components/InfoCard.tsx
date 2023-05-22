@@ -3,7 +3,9 @@ import Image from "next/image";
 import { HeartIcon } from "@heroicons/react/outline";
 import { StarIcon } from "@heroicons/react/solid";
 import Link from "next/link";
-function InfoCard({
+import { CourseProps } from "../helpers/types";
+
+const InfoCard: React.FC<CourseProps> = ({
   description,
   id,
   lessonsCount,
@@ -11,9 +13,9 @@ function InfoCard({
   previewImageLink,
   rating,
   title,
-}) {
+}) => {
   return (
-    <Link href={{ pathname: "/course", query: { id } }}>
+    <Link href={{ pathname: "/course", query: { id: id } }}>
       <div className="flex flex-col lg:flex-row py-4 lg:py-7 px-4 gap-10 border-b cursor-pointer hover:opacity-80 hover:shadow-lg transition duration-200 ease-out first:border-t last:border-t-0 ">
         <div className="relative w-[380px] h-[190px] lg:w-[380px] lg:h-[220px] md:w-full md:h-[300px] flex-shrink-0 self-center">
           <Image
@@ -53,6 +55,6 @@ function InfoCard({
       </div>
     </Link>
   );
-}
+};
 
 export default InfoCard;

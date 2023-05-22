@@ -1,7 +1,19 @@
 import React from "react";
 import { LockClosedIcon } from "@heroicons/react/solid";
 
-function LessonCard({ order, previewImageLink, status, title }) {
+type LessonProps = {
+  order: number;
+  previewImageLink: string;
+  status: string;
+  title: string;
+};
+
+const LessonCard: React.FC<LessonProps> = ({
+  order,
+  previewImageLink,
+  status,
+  title,
+}) => {
   return (
     <div>
       <div className="flex rounded-2xl bg-white h-20 md:h-28 w-[250px] md:w-[400px] my-2 mx-auto cursor-pointer items-center active:bg-red-400">
@@ -19,6 +31,6 @@ function LessonCard({ order, previewImageLink, status, title }) {
       </div>
     </div>
   );
-}
+};
 
 export default LessonCard;

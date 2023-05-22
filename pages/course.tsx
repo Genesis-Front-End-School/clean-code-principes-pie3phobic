@@ -1,13 +1,18 @@
-import React, { useEffect, useRef, useReducer } from "react";
+import React, { useEffect, useRef, useReducer, MutableRefObject } from "react";
 import { FireIcon, StarIcon } from "@heroicons/react/solid";
 import Header from "../components/Header";
 import LessonCard from "../components/LessonCard";
-import ApiClient from "./api/getCourseData";
-import { reducer } from "../helpers/courseReducer";
+import { Action, State, reducer } from "../helpers/courseReducer";
 import VideoPlayer from "../components/VideoPlayer";
 import { handleUnlockedVideo, handleLockedVideo } from "../helpers/videoUtils";
-
-function Course({ data }) {
+import {
+  CourseDataProps,
+  LessonProps,
+  PropsDataCourse,
+} from "../helpers/types";
+import { GetServerSidePropsContext } from "next";
+import FetchCourseDataApiClient from "./api/getCourseData";
+const Course: React.FC<PropsDataCourse> = ({ data }) => {
   const lessonData = data.lessons;
   const initialState = {
     videoUrl: data.meta.courseVideoPreview?.link,
@@ -17,8 +22,11 @@ function Course({ data }) {
     isEnded: false,
     isReady: false,
   };
-  const [state, dispatch] = useReducer(reducer, initialState);
-  const lessonRef = useRef();
+  const [state, dispatch] = useReducer<React.Reducer<State, Action>>(
+    reducer,
+    initialState
+  );
+  const lessonRef: MutableRefObject<LessonProps> = useRef(null);
 
   useEffect(() => {
     if (data.meta.courseVideoPreview?.link === void 0)
@@ -75,13 +83,7 @@ function Course({ data }) {
           </div>
           <div className="flex flex-col  lg:flex-row lg:justify-between">
             <div className="pr-10 lg:pr-0">
-              <VideoPlayer
-                url={state.videoUrl}
-                initialState={dispatch}
-                width="100%"
-                muted={false}
-                controls={true}
-              />
+              <VideoPlayer url={state.videoUrl} initialState={initialState} />
             </div>
           </div>
           <div className="flex flex-col bg-gray-200 h-[560px] w-[310px] lg:w-[500px] overflow-scroll rounded-3xl lg:absolute pb-8 scrollbar-hide md:w-[686px] lg:top-80 lg:right-0">
@@ -111,12 +113,14 @@ function Course({ data }) {
       </div>
     </div>
   );
-}
+};
 export default Course;
-
-export async function getServerSideProps(context) {
+export const getServerSideProps = async (
+  context: GetServerSidePropsContext
+) => {
   const { id } = context.query;
-  const apiClient = await ApiClient.getInstance();
-  const { data } = await apiClient.getCourseData(id);
+  const fetchCourseDataApiClient = await FetchCourseDataApiClient.getInstance();
+  const { data }: { data: CourseDataProps } =
+    await fetchCourseDataApiClient.fetchData(id as string);
   return { props: { data } };
-}
+};

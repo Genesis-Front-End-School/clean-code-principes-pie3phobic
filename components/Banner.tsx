@@ -1,3 +1,4 @@
+import React from "react";
 function Banner() {
   return (
     <div className="m-10 flex justify-center align-center flex-col">
