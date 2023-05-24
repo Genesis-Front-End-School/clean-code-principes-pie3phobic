@@ -1,3 +1,1 @@
-declare module "minty-ui-library" {
-  export * from "minty-ui-library/dist/MediumCard";
-}
+declare module "minty-ui-library";
